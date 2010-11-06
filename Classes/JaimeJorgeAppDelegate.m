@@ -7,13 +7,18 @@
 //
 
 #import "JaimeJorgeAppDelegate.h"
-
+#import "FlurryAPI.h"
 
 @implementation JaimeJorgeAppDelegate
 
 @synthesize window;
 @synthesize tabBarController;
 @synthesize moreListCtrl;
+
+void uncaughtExceptionHandler(NSException *exception)
+{
+    [FlurryAPI logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
 
 -(void)restoreOrder
 {
@@ -75,6 +80,9 @@
 	UIImage* defaultImage = [UIImage imageNamed:@"Default.png"];
 	UIImageView* imageView = [[[UIImageView alloc] initWithImage:defaultImage] autorelease];
 	
+	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+	[FlurryAPI startSessionWithLocationServices:@"ZC2TW18UYGB1CNC67F99"];
+	
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	
 	[self configureMoreVC];
@@ -93,6 +101,8 @@
 	                 {
 						 [imageView removeFromSuperview];
 					 }];
+	
+	[FlurryAPI countPageViews:tabBarController];
 	
     return YES;
 }
