@@ -9,6 +9,7 @@
 #import "ConcertsViewController.h"
 #import "HTMLParserDelegate.h"
 #import "EGORefreshTableHeaderView.h"
+#import <EventKit/EventKit.h>
 
 @implementation ConcertsViewController
 
@@ -20,6 +21,12 @@
 @synthesize concertsTable;
 @synthesize savedIndexPath;
 @synthesize activity;
+@synthesize selConcert;
+@synthesize alertView;
+
+#define EVENT_START 0
+#define ONE_HOUR_BEFORE -3600
+#define ONE_DAY_BEFORE ONE_HOUR_BEFORE * 24
 
 - (void)viewDidLoad
 {
@@ -214,7 +221,12 @@
 		
 		numButtons = 0;
 		
-		NSDictionary* selConcert = [concerts objectAtIndex:row];
+		self.selConcert = [concerts objectAtIndex:row];
+		
+		for(int i = 0; i < 4; ++i)
+		{
+			index2type[i] = -1;
+		}
 		
 		UIActionSheet* action;
 		
@@ -223,23 +235,24 @@
 		
 		NSDate* eventdate = [self dateFromDate:[selConcert objectForKey:@"Date"] time:[selConcert objectForKey:@"Time"]];
 		
-		//NSLog(@"%@", [address description]);
-		
 		if(eventdate != nil)
 		{
 			buttons[numButtons] = @"Add event to calendar";
+			index2type[numButtons] = CALENDAR;
 			++numButtons;
 		}
 		
 		if(address != nil)
 		{
 			buttons[numButtons] = @"Show venue in map";
+			index2type[numButtons] = MAP;
 			++numButtons;
 		}
 		
 		if(phone != nil)
 		{
 			buttons[numButtons] = [NSString stringWithFormat:@"Call venue: %@", [selConcert objectForKey:@"Venue phone"]];
+			index2type[numButtons] = CALL;
 			++numButtons;
 		}
 		
@@ -269,11 +282,76 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+	NSString* phoneNumber = [NSString stringWithFormat:@"tel:%@", [selConcert objectForKey:@"Venue phone"]];
+	NSString* address;
+	NSDate* eventdate;
+	
+	EKAlarm* alarm;
+	EKEvent* event;
+	EKCalendar* calendar;
+	NSError* error;
+	
+	EKEventStore* store = [[EKEventStore alloc] init];
+	
 	// Determine which button was pressed
+	switch (index2type[buttonIndex])
+	{
+		case CALENDAR:
+			eventdate = [self dateFromDate:[selConcert objectForKey:@"Date"] time:[selConcert objectForKey:@"Time"]];
+			
+			event = [EKEvent eventWithEventStore:store];
+			
+			calendar = [store defaultCalendarForNewEvents];
+			
+			event.title = @"Jaime Jorge in Concert";
+			event.location = [selConcert objectForKey:@"Address"];
+			if (phoneNumber != nil)
+			{
+				event.notes = [NSString stringWithFormat:@"Phone number: %@", [selConcert objectForKey:@"Venue phone"]];
+			}
+			
+			event.startDate = eventdate;
+			event.endDate = eventdate;
+			event.calendar = calendar;
+			
+			alarm = [EKAlarm alarmWithRelativeOffset:ONE_DAY_BEFORE]; // Start of event
+			[event addAlarm:alarm];
+			
+			alarm = [EKAlarm alarmWithRelativeOffset:ONE_HOUR_BEFORE]; // One hour before
+			[event addAlarm:alarm];
+			
+			[store saveEvent:event span:EKSpanThisEvent error:&error];
+			
+			break;
+			
+		case MAP:
+			address = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", [[selConcert objectForKey:@"Address"] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:address]];
+			break;
+			
+		case CALL:
+			if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:"]] == NO )
+			{
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+			}
+			else
+			{
+				self.alertView = [[UIAlertView alloc] initWithTitle:@"Feature not available" message:@"Your device doesn't support making phone calls. Please, copy the phone number and place the call from another device." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				
+				[alertView show];
+			}
+			
+			break;
+	}
 	
-	
+	[store release];
 	
 	[concertsTable deselectRowAtIndexPath:savedIndexPath animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	self.alertView = nil;
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser
@@ -330,7 +408,6 @@
 {
 	if([elementName isEqualToString:@"item"])
 	{
-		//NSLog(@"%@", concert);
 		[self.concerts addObject:self.concert];
 		self.concert = nil;
 		newConcert = NO;

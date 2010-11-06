@@ -11,6 +11,12 @@
 @class HTMLParserDelegate;
 @class EGORefreshTableHeaderView;
 
+enum {
+	CALENDAR = 0,
+	MAP,
+	CALL
+};
+
 @interface ConcertsViewController : UIViewController <UITableViewDelegate, NSXMLParserDelegate, UIActionSheetDelegate>
 {
 	NSXMLParser* parser;
@@ -18,8 +24,11 @@
 	
 	NSMutableDictionary* concert;
 	NSMutableArray* concerts;
+	NSDictionary* selConcert;
 	
 	UITableView* concertsTable;
+	
+	UIAlertView* alertView;
 	
 	HTMLParserDelegate* htmlParserDelegate;
 	
@@ -30,6 +39,8 @@
 	
 	int numButtons;
 	
+	int index2type[4];
+	
 	NSIndexPath* savedIndexPath;
 	
 	UIActivityIndicatorView* activity;
@@ -39,9 +50,11 @@
 
 @property (retain, nonatomic) NSXMLParser* parser;
 @property (retain, nonatomic) NSXMLParser* htmlParser;
+@property (retain, nonatomic) UIAlertView* alertView;
 @property (retain, nonatomic) HTMLParserDelegate* htmlParserDelegate;
 @property (retain, nonatomic) NSMutableDictionary* concert;
 @property (retain, nonatomic) NSMutableArray* concerts;
+@property (retain, nonatomic) NSDictionary* selConcert;
 @property (retain, nonatomic) NSIndexPath* savedIndexPath;
 @property (retain, nonatomic) IBOutlet UITableView* concertsTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
