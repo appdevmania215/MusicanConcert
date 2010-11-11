@@ -31,4 +31,6 @@
 @property (retain, nonatomic) IBOutlet UITableView* albumsTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
 
+-(void)getAlbumCountWithTabIndex:(int)index sign:(int)sign;
+
 @end

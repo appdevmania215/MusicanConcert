@@ -8,7 +8,7 @@
 
 #import "VideoViewController.h"
 #import "EGORefreshTableHeaderView.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import "JJMoviePlayerController.h"
 
 @implementation VideoViewController
 
@@ -28,8 +28,7 @@
 
 -(void)awakeFromNib
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateMovie:) name:UIDeviceOrientationDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDone) name:MPMoviePlayerDidExitFullscreenNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackFinish) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 }
 
 -(NSString*)getDocumentDirectory
@@ -83,11 +82,27 @@
 	return [[UIImage imageWithData:imageData] thumbnailImage:88 transparentBorder:NO cornerRadius:0 interpolationQuality:kCGInterpolationHigh];
 }
 
+-(void)createDirectories
+{
+	NSFileManager* fileManager = [NSFileManager defaultManager];
+	
+	BOOL isDir = NO;
+	
+	NSString* thumbsDirectory = [NSString stringWithFormat:@"%@/thumbnails", [self getDocumentDirectory]];
+	
+	if([fileManager fileExistsAtPath:thumbsDirectory isDirectory:&isDir] == NO && !isDir)
+	{
+		[fileManager createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:nil];
+	}
+}
+
 -(void)getVideos:(NSString*)urlStr
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	[self getVideoCount:@"http://www.hyem3.com/jjapp/getvideos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
 	
 	NSURL *url = [NSURL URLWithString:urlStr];
 	
@@ -98,6 +113,8 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	
 	[videos writeToFile:[self getCacheFilename] atomically:YES];
+	
+	[self createDirectories];
 	
 	[self getVideoCovers];
 	
@@ -158,7 +175,7 @@
 	}
 	else
 	{
-		[[cell textLabel] setText:@"There are no videos..."];
+		[[cell textLabel] setText:@"Downloading videos..."];
 		[[cell textLabel] setTextColor:[UIColor whiteColor]];
 		
 		[[cell detailTextLabel] setText:@""];
@@ -168,41 +185,37 @@
     return cell;
 }
 
+-(void)moviePlaybackFinish
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMoviePlayerBackground" object:nil];
+	UIDevice* curDevice = [UIDevice currentDevice];
+	if( [curDevice respondsToSelector:@selector(setOrientation:)] == YES )
+	{
+		[curDevice setOrientation:UIInterfaceOrientationPortrait];
+	}
+	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:YES];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"UseMoviePlayerBackground" object:nil];
+	
 	int row = [indexPath row];
 	
 	NSDictionary* selVideo = [videos objectAtIndex:row];
 	
 	NSURL* url = [NSURL URLWithString:[selVideo objectForKey:@"videourl"]];
 	
-	self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:url];
+	self.moviePlayer = [[JJMoviePlayerController alloc] initWithContentURL:url];
 	
-	[[moviePlayer view] setFrame: [videosTable frame]];  // frame must match parent view
+	[[(MPMoviePlayerViewController*)moviePlayer moviePlayer] setUseApplicationAudioSession:NO];
 	
-	UIImageView* imageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]] autorelease];
-	[imageView setContentMode:UIViewContentModeScaleAspectFit];
-	//[imageView setFrame:[[UIScreen mainScreen] bounds]];
-	//[imageView setFrame:[videosTable frame]];
-	
-	//[[moviePlayer backgroundView] setBackgroundColor:[UIColor clearColor]];
-	//[[moviePlayer backgroundView] addSubview:imageView];
-	//[[moviePlayer view] setBackgroundColor:[UIColor clearColor]];
-	[[self.view superview] addSubview: [moviePlayer view]];
-	
-	[moviePlayer setFullscreen:YES animated:YES];
-	[moviePlayer play];
-}
-
--(void)movieDone
-{	
-	[[UIDevice currentDevice] setOrientation:UIInterfaceOrientationPortrait];
-	[[moviePlayer view] removeFromSuperview];
+	[self presentMoviePlayerViewControllerAnimated:(MPMoviePlayerViewController*) moviePlayer];
 }
 
 - (void)reloadTableViewDataSource
 {
-	[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php"];
+	[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php?mode=1"];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -254,6 +267,37 @@
 	[refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
 }
 
+-(void)updateBadgeValue:(int)index count:(int)count
+{
+	UITabBarController* tabBarCtrl = [self tabBarController];
+	NSArray* tabBarItems = [[tabBarCtrl tabBar] items];
+	
+	if(index >= [tabBarItems count])
+	{
+		index = [tabBarItems count] - 1;
+	}
+	
+	UITabBarItem* tabBarItem = [tabBarItems objectAtIndex:index];
+	
+	int badgeValue = 0;
+	
+	if([[tabBarItem badgeValue] length] > 0)
+	{
+		badgeValue = [[tabBarItem badgeValue] intValue];
+	}
+	
+	badgeValue += count;
+	
+	if(badgeValue > 0)
+	{
+		[tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", badgeValue]];
+	}
+	else
+	{
+		[tabBarItem setBadgeValue:nil];
+	}
+}
+
 -(void)reloadData
 {
 	[videosTable reloadData];
@@ -261,6 +305,26 @@
 	[self dataSourceDidFinishLoadingNewData];
 	
 	[activity stopAnimating];
+}
+
+-(void)getVideoCount:(NSString*)urlStr tabIndex:(int)index sign:(int)sign
+{
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	NSURL *url = [NSURL URLWithString:urlStr];
+	
+	NSDictionary* data = [NSDictionary dictionaryWithContentsOfURL:url];
+	
+	int count = [[data objectForKey:@"videocount"] intValue];
+	
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == YES && videos == nil)
+	{
+		self.videos = [NSArray arrayWithContentsOfFile:[self getCacheFilename]];
+	}
+	
+	[self updateBadgeValue:index count:sign * (count - [videos count])];
 }
 
 - (void)viewDidLoad
@@ -283,129 +347,13 @@
 	else
 	{
 		[activity startAnimating];
-		[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php"];
+		[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php?mode=1"];
 	}
-}
-
--(double)getRotationAngle
-{
-	double result = 0.0;
-	switch([[UIDevice currentDevice] orientation])
-	{
-		case UIDeviceOrientationPortrait:
-			break;
-			
-		case UIDeviceOrientationPortraitUpsideDown:
-			result = -M_PI;
-			break;
-			
-		case UIDeviceOrientationLandscapeLeft:
-			result = M_PI / 2;
-			break;
-			
-		case UIDeviceOrientationLandscapeRight:
-			result = -M_PI / 2;
-			break;
-	}
-	return result;
-}
-
--(CGRect)rotateFrame:(CGRect)inFrame
-{
-	double temp = inFrame.size.width;
-	
-	inFrame.size.width = inFrame.size.height;
-	inFrame.size.height = temp;
-	
-	temp = inFrame.origin.y;
-	
-	inFrame.origin.y = inFrame.origin.x;
-	inFrame.origin.x = temp;
-	
-	return inFrame;
-}
-
--(CGPoint)rotateCenter:(CGPoint)inCenter
-{
-	double temp = inCenter.y;
-	
-	inCenter.y = inCenter.x;
-	inCenter.x = temp;
-	
-	return inCenter;
-}
-
--(CGRect)getBounds
-{
-	//CGRect result = [videosTable frame];
-	CGRect result = CGRectMake(0, 0, 320, 367);
-	switch([[UIDevice currentDevice] orientation])
-	{
-		case UIDeviceOrientationLandscapeLeft:
-		case UIDeviceOrientationLandscapeRight:
-			result = [self rotateFrame:result];
-			break;
-	}
-	
-	NSLog(@"Origin: %f %f", result.origin.x, result.origin.y);
-	return result;
-}
-
--(CGPoint)getCenter
-{
-	CGPoint result = [videosTable center];
-	switch([[UIDevice currentDevice] orientation])
-	{			
-		case UIDeviceOrientationLandscapeLeft:		
-		case UIDeviceOrientationLandscapeRight:
-			//result = [self rotateCenter:result];
-			break;
-	}
-	return result;
-}
-
--(void)rotateMovie:(NSNotification*)note
-{
-	if(self.moviePlayer != nil)
-	{
-		[UIView beginAnimations:@"View Rotation" context:nil];
-		[UIView setAnimationDuration: 0.5f];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-		
-		moviePlayer.view.transform = CGAffineTransformIdentity;
-		moviePlayer.view.transform = CGAffineTransformMakeRotation([self getRotationAngle]);
-		
-		moviePlayer.view.bounds = [self getBounds];
-		moviePlayer.view.center = [self getCenter];
-		
-		[UIView commitAnimations];
-	}
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-	if([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-	{
-		[[moviePlayer view] removeFromSuperview];
-		self.moviePlayer = nil;
-	}
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-	[self movieDone];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {	
-	BOOL result = YES;
-	
-	if(self.moviePlayer == nil)
-	{
-		result = (interfaceOrientation == UIInterfaceOrientationPortrait);
-	}
-	
-    return result; 
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didReceiveMemoryWarning
@@ -422,6 +370,5 @@
 {
     [super dealloc];
 }
-
 
 @end

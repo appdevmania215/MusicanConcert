@@ -108,6 +108,8 @@
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	
+	[self getAlbumCountWithTabIndex:[[self tabBarController] selectedIndex] sign:-1];
+	
 	// Search for artist albums = http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsLookup?id=264493238&entity=album
 	NSURL* artistURL = [NSURL URLWithString:@"http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsLookup?id=264493238&entity=album"];
 	NSString* albumsJSON = [NSString stringWithContentsOfURL:artistURL encoding:NSASCIIStringEncoding error:nil];
@@ -276,6 +278,62 @@
 	[albumViewController viewWillAppear:YES];
 	[[self navigationController] pushViewController:albumViewController animated:YES];
 	[albumViewController viewDidAppear:YES];
+}
+
+-(void)updateBadgeValue:(int)index count:(int)count
+{
+	UITabBarController* tabBarCtrl = [self tabBarController];
+	NSArray* tabBarItems = [[tabBarCtrl tabBar] items];
+	
+	if(index >= [tabBarItems count])
+	{
+		index = [tabBarItems count] - 1;
+	}
+	
+	UITabBarItem* tabBarItem = [tabBarItems objectAtIndex:index];
+	
+	int badgeValue = 0;
+	
+	if([[tabBarItem badgeValue] length] > 0)
+	{
+		badgeValue = [[tabBarItem badgeValue] intValue];
+	}
+	
+	badgeValue += count;
+	
+	if(badgeValue > 0)
+	{
+		[tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", badgeValue]];
+	}
+	else
+	{
+		[tabBarItem setBadgeValue:nil];
+	}
+}
+
+-(void)getAlbumCountWithTabIndex:(int)index sign:(int)sign
+{
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	NSURL* artistURL = [NSURL URLWithString:@"http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsLookup?id=264493238&entity=album"];
+	NSString* albumsJSON = [NSString stringWithContentsOfURL:artistURL encoding:NSASCIIStringEncoding error:nil];
+	
+	[self parseAlbums:albumsJSON];
+	
+	int count = [albums count];
+	
+	self.albums = nil;
+	
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == YES && albums == nil)
+	{
+		albumsJSON = [NSString stringWithContentsOfFile:[self getCacheFilename] encoding:NSASCIIStringEncoding error:nil];
+		
+		[self parseAlbums:albumsJSON];
+	}
+	
+	[self updateBadgeValue:index count:sign * (count - [albums count])];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

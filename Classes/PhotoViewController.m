@@ -58,7 +58,7 @@
 	return [NSString stringWithFormat:@"%@/thumbnails.plist", [self getDocumentDirectory]];
 }
 
--(void)createAlbumDirectory
+-(void)createDirectories
 {
 	NSFileManager* fileManager = [NSFileManager defaultManager];
 	
@@ -105,6 +105,8 @@
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	
+	[self getPhotoCount:@"http://www.hyem3.com/jjapp/getphotos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
+	
 	NSURL *url = [NSURL URLWithString:urlStr];
 	
 	NSDictionary* data = [NSDictionary dictionaryWithContentsOfURL:url];
@@ -115,7 +117,7 @@
 	
 	[thumbs writeToFile:[self getCacheFilename] atomically:YES];
 	
-	[self createAlbumDirectory];
+	[self createDirectories];
 	
 	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 	
@@ -127,7 +129,7 @@
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
 	self.thumbs = [NSArray arrayWithContentsOfFile:[self getCacheFilename]];
-		
+	
 	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 	
 	[pool release];
@@ -135,7 +137,7 @@
 
 - (void)reloadTableViewDataSource
 {
-	[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php"];
+	[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php?mode=1"];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -190,6 +192,37 @@
 	}
 }
 
+-(void)updateBadgeValue:(int)index count:(int)count
+{
+	UITabBarController* tabBarCtrl = [self tabBarController];
+	NSArray* tabBarItems = [[tabBarCtrl tabBar] items];
+	
+	if(index >= [tabBarItems count])
+	{
+		index = [tabBarItems count] - 1;
+	}
+	
+	UITabBarItem* tabBarItem = [tabBarItems objectAtIndex:index];
+	
+	int badgeValue = 0;
+	
+	if([[tabBarItem badgeValue] length] > 0)
+	{
+		badgeValue = [[tabBarItem badgeValue] intValue];
+	}
+	
+	badgeValue += count;
+	
+	if(badgeValue > 0)
+	{
+		[tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", badgeValue]];
+	}
+	else
+	{
+		[tabBarItem setBadgeValue:nil];
+	}
+}
+
 -(void)reloadData
 {	
 	[thumbsTable reloadData];
@@ -198,6 +231,27 @@
 	
 	[activity stopAnimating];
 }
+
+-(void)getPhotoCount:(NSString*)urlStr tabIndex:(int)index sign:(int)sign
+{
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	NSURL *url = [NSURL URLWithString:urlStr];
+	
+	NSDictionary* data = [NSDictionary dictionaryWithContentsOfURL:url];
+	
+	int count = [[data objectForKey:@"photocount"] intValue];
+	
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == YES && thumbs == nil)
+	{
+		self.thumbs = [NSArray arrayWithContentsOfFile:[self getCacheFilename]];
+	}
+
+	[self updateBadgeValue:index count:sign * (count - [thumbs count])];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -211,14 +265,17 @@
 		[refreshHeaderView release];
 	}
 	
-	if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == NO)
+	if( thumbs == nil )
 	{
-		[activity startAnimating];
-		[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php"];
-	}
-	else
-	{
-		[self performSelectorInBackground:@selector(getCachedThumbs:) withObject:nil];
+		if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == NO)
+		{
+			[activity startAnimating];
+			[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php?mode=1"];
+		}
+		else
+		{
+			[self performSelectorInBackground:@selector(getCachedThumbs:) withObject:nil];
+		}
 	}
 }
 
@@ -274,7 +331,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+	
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

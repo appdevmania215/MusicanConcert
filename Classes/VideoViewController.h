@@ -31,4 +31,6 @@
 @property (retain, nonatomic) IBOutlet UITableView* videosTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
 
+-(void)getVideoCount:(NSString*)urlStr tabIndex:(int)index sign:(int)sign;
+
 @end
