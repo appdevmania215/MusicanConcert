@@ -102,7 +102,7 @@
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	
-	[self getVideoCount:@"http://www.hyem3.com/jjapp/getvideos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
+	[self getVideoCount:@"http://www.jaimejorge.com/app/getvideos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
 	
 	NSURL *url = [NSURL URLWithString:urlStr];
 	
@@ -215,7 +215,7 @@
 
 - (void)reloadTableViewDataSource
 {
-	[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php?mode=1"];
+	[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.jaimejorge.com/app/getvideos.php?mode=1"];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -347,7 +347,7 @@
 	else
 	{
 		[activity startAnimating];
-		[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.hyem3.com/jjapp/getvideos.php?mode=1"];
+		[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.jaimejorge.com/app/getvideos.php?mode=1"];
 	}
 }
 

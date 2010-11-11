@@ -105,7 +105,7 @@
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	
-	[self getPhotoCount:@"http://www.hyem3.com/jjapp/getphotos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
+	[self getPhotoCount:@"http://www.jaimejorge.com/app/getphotos.php?mode=0" tabIndex:[[self tabBarController] selectedIndex] sign:-1];
 	
 	NSURL *url = [NSURL URLWithString:urlStr];
 	
@@ -137,7 +137,7 @@
 
 - (void)reloadTableViewDataSource
 {
-	[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php?mode=1"];
+	[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.jaimejorge.com/app/getphotos.php?mode=1"];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -270,7 +270,7 @@
 		if([[NSFileManager defaultManager] fileExistsAtPath:[self getCacheFilename]] == NO)
 		{
 			[activity startAnimating];
-			[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.hyem3.com/jjapp/getphotos.php?mode=1"];
+			[self performSelectorInBackground:@selector(getThumbs:) withObject:@"http://www.jaimejorge.com/app/getphotos.php?mode=1"];
 		}
 		else
 		{
