@@ -103,6 +103,9 @@
 		9FE525B91218FBEA00E52A74 /* Ministry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525B71218FBEA00E52A74 /* Ministry@2x.png */; };
 		9FE525F51218FF2000E52A74 /* BioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE525F31218FF2000E52A74 /* BioViewController.m */; };
 		9FE525F61218FF2000E52A74 /* BioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525F41218FF2000E52A74 /* BioViewController.xib */; };
+		9FE6367F128722470058A709 /* JJMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE6367E128722470058A709 /* JJMoviePlayerController.m */; };
+		9FE637591287354A0058A709 /* MusicPlayerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE637571287354A0058A709 /* MusicPlayerBackground.png */; };
+		9FE6375A1287354A0058A709 /* MusicPlayerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE637581287354A0058A709 /* MusicPlayerBackground@2x.png */; };
 		9FF786CE12765F6A00DE50C1 /* RotatingTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF786CD12765F6A00DE50C1 /* RotatingTabBarController.m */; };
 		9FFDD0E1121AE138006CC81E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FFDD0E0121AE138006CC81E /* Icon@2x.png */; };
 /* End PBXBuildFile section */
@@ -232,6 +235,10 @@
 		9FE525F21218FF2000E52A74 /* BioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BioViewController.h; sourceTree = "<group>"; };
 		9FE525F31218FF2000E52A74 /* BioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BioViewController.m; sourceTree = "<group>"; };
 		9FE525F41218FF2000E52A74 /* BioViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = BioViewController.xib; path = Classes/BioViewController.xib; sourceTree = "<group>"; };
+		9FE6367D128722470058A709 /* JJMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJMoviePlayerController.h; sourceTree = "<group>"; };
+		9FE6367E128722470058A709 /* JJMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJMoviePlayerController.m; sourceTree = "<group>"; };
+		9FE637571287354A0058A709 /* MusicPlayerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MusicPlayerBackground.png; sourceTree = "<group>"; };
+		9FE637581287354A0058A709 /* MusicPlayerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayerBackground@2x.png"; sourceTree = "<group>"; };
 		9FF786CC12765F6A00DE50C1 /* RotatingTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatingTabBarController.h; sourceTree = "<group>"; };
 		9FF786CD12765F6A00DE50C1 /* RotatingTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatingTabBarController.m; sourceTree = "<group>"; };
 		9FFDD0E0121AE138006CC81E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -274,8 +281,6 @@
 				9FACD0D31273AD29004D2F56 /* PhotoViewController.m */,
 				9FACD0D41273AD29004D2F56 /* PictureViewController.h */,
 				9FACD0D51273AD29004D2F56 /* PictureViewController.m */,
-				9FACD0D61273AD29004D2F56 /* VideoViewController.h */,
-				9FACD0D71273AD29004D2F56 /* VideoViewController.m */,
 				9FE51ED612186E7C00E52A74 /* BackgroundRotator.h */,
 				9FE51ED712186E7C00E52A74 /* BackgroundRotator.m */,
 				9FE51FAC12187B6200E52A74 /* MusicViewController.h */,
@@ -294,6 +299,10 @@
 				9FE525AB1218FA7000E52A74 /* MinistryViewController.m */,
 				9FE525F21218FF2000E52A74 /* BioViewController.h */,
 				9FE525F31218FF2000E52A74 /* BioViewController.m */,
+				9FACD0D61273AD29004D2F56 /* VideoViewController.h */,
+				9FACD0D71273AD29004D2F56 /* VideoViewController.m */,
+				9FE6367D128722470058A709 /* JJMoviePlayerController.h */,
+				9FE6367E128722470058A709 /* JJMoviePlayerController.m */,
 				1D3623240D0F684500981E51 /* JaimeJorgeAppDelegate.h */,
 				1D3623250D0F684500981E51 /* JaimeJorgeAppDelegate.m */,
 			);
@@ -431,6 +440,8 @@
 		9FE51EAD1218698500E52A74 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9FE637571287354A0058A709 /* MusicPlayerBackground.png */,
+				9FE637581287354A0058A709 /* MusicPlayerBackground@2x.png */,
 				9FA073DC121EB6D700757504 /* MinistryIcon.png */,
 				9FA073DD121EB6D700757504 /* MinistryIcon@2x.png */,
 				9FA073D5121EB41E00757504 /* BiographyIcon.png */,
@@ -573,6 +584,8 @@
 				9FACD0E01273AD3A004D2F56 /* VideoViewController.xib in Resources */,
 				9FACD0F71273C7AE004D2F56 /* ThumbnailViewCell.xib in Resources */,
 				9FC22E23127DDC1B00D72B0E /* ContactViewController.xib in Resources */,
+				9FE637591287354A0058A709 /* MusicPlayerBackground.png in Resources */,
+				9FE6375A1287354A0058A709 /* MusicPlayerBackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +603,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $BUILD_STYLE == \"Release\" ]; then\n\n# compress application.\n\n\tif [ ! -d $CONFIGURATION_BUILD_DIR/Payload ]\n\tthen\n\t\t/bin/mkdir $CONFIGURATION_BUILD_DIR/Payload\n\tfi\n\n\t/bin/cp -R $CONFIGURATION_BUILD_DIR/JaimeJorge.app $CONFIGURATION_BUILD_DIR/Payload\n\n\t/bin/cp images/iTunesIcon.png $CONFIGURATION_BUILD_DIR/iTunesArtwork\n\n\tcd $CONFIGURATION_BUILD_DIR\n\n# zip up the directory\n\n\t/usr/bin/zip -r JaimeJorge.ipa Payload iTunesArtwork\n     /usr/bin/zip -r JaimeJorge.zip JaimeJorge.ipa\n\nfi";
+			shellScript = "if [ $BUILD_STYLE == \"Release\" ]; then\n\n# compress application.\n\n\tif [ ! -d $CONFIGURATION_BUILD_DIR/Payload ]\n\tthen\n\t\t/bin/mkdir $CONFIGURATION_BUILD_DIR/Payload\n\tfi\n\n\t/bin/cp -R $CONFIGURATION_BUILD_DIR/JaimeJorge.app $CONFIGURATION_BUILD_DIR/Payload\n\n\t/bin/cp images/iTunesIcon.png $CONFIGURATION_BUILD_DIR/iTunesArtwork\n\n\tcd $CONFIGURATION_BUILD_DIR\n\n# zip up the directory\n\n\t/usr/bin/zip -r JaimeJorge.ipa Payload iTunesArtwork\n\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -627,6 +640,7 @@
 				9FACD11A1273C885004D2F56 /* UIImage+RoundedCorner.m in Sources */,
 				9FF786CE12765F6A00DE50C1 /* RotatingTabBarController.m in Sources */,
 				9FC22E22127DDC1B00D72B0E /* ContactViewController.m in Sources */,
+				9FE6367F128722470058A709 /* JJMoviePlayerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

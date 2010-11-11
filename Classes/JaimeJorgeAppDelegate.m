@@ -7,6 +7,9 @@
 //
 
 #import "JaimeJorgeAppDelegate.h"
+#import "PhotoViewController.h"
+#import "VideoViewController.h"
+#import "MusicViewController.h"
 #import "FlurryAPI.h"
 
 @implementation JaimeJorgeAppDelegate
@@ -75,6 +78,49 @@ void uncaughtExceptionHandler(NSException *exception)
 	}
 }
 
+-(void)resetBadgeValues
+{
+	UITabBarController* tabBarCtrl = [self tabBarController];
+	NSArray* tabBarItems = [[tabBarCtrl tabBar] items];
+	
+	for (UITabBarItem* tabBarItem in tabBarItems)
+	{
+		[tabBarItem setBadgeValue:nil];
+	}
+}
+
+-(void)updateBadgeValues
+{
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	
+	NSArray *viewControllers = [tabBarController viewControllers];
+	
+	[self resetBadgeValues];
+	
+	int tabIndex = 0;
+	
+	for(UINavigationController* navc in viewControllers)
+	{
+		UIViewController* vc = [navc topViewController];
+		if( [vc respondsToSelector:@selector(getPhotoCount:tabIndex:sign:)] == YES )
+		{
+			[(PhotoViewController*)vc getPhotoCount:@"http://www.jaimejorge.com/app/getphotos.php?mode=0" tabIndex:tabIndex sign:1];
+		}
+		else if( [vc respondsToSelector:@selector(getVideoCount:tabIndex:sign:)] == YES )
+		{
+			[(VideoViewController*)vc getVideoCount:@"http://www.jaimejorge.com/app/getvideos.php?mode=0" tabIndex:tabIndex sign:1];
+		}
+		else if( [vc respondsToSelector:@selector(getAlbumCountWithTabIndex:sign:)] == YES )
+		{
+			[(MusicViewController*)vc getAlbumCountWithTabIndex:tabIndex sign:1];
+		}
+		
+		++tabIndex;
+	}
+	
+	[pool release];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
 	UIImage* defaultImage = [UIImage imageNamed:@"Default.png"];
@@ -83,9 +129,10 @@ void uncaughtExceptionHandler(NSException *exception)
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 	[FlurryAPI startSessionWithLocationServices:@"ZC2TW18UYGB1CNC67F99"];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeValues) name:@"UpdateBadgeValues" object:nil];
+	
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	
-	[self configureMoreVC];
 	[self restoreOrder];
 	
     [window addSubview:tabBarController.view];
@@ -152,6 +199,8 @@ void uncaughtExceptionHandler(NSException *exception)
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	
 	[self configureMoreVC];
+	
+	[self performSelectorInBackground:@selector(updateBadgeValues) withObject:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

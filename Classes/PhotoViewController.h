@@ -40,5 +40,6 @@
 @property (retain, nonatomic) IBOutlet ThumbnailViewCell* tmpCell;
 
 -(void)clearView;
+-(void)getPhotoCount:(NSString*)urlStr tabIndex:(int)index sign:(int)sign;
 
 @end

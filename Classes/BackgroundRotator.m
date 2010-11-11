@@ -16,7 +16,7 @@
 @synthesize back;
 @synthesize tabBarCtrl;
 
--(NSString*)nextImageName
+-(UIImage*)nextImage
 {
 	int newImage = usedImage;
 	
@@ -27,16 +27,14 @@
 	
 	usedImage = newImage;
 	
-	return [NSString stringWithFormat:@"background%d", usedImage];
+	return [UIImage imageNamed:[NSString stringWithFormat:@"background%d", usedImage]];
 }
 
--(void)changeImage
+-(void)changeImage:(UIImage*)image delay:(float)delay
 {
-	UIImage* image = [UIImage imageNamed:[self nextImageName]];
-	
 	[views[!activeView] setImage:image]; // Set back view
 	
-	[UIView animateWithDuration:0.5 
+	[UIView animateWithDuration:delay 
 					 animations:^{
 						 [views[activeView] setAlpha:0.0];
 					 }
@@ -47,17 +45,30 @@
 					 }];
 }
 
+-(void)useMoviePlayerBackground
+{
+	[self changeImage:[UIImage imageNamed:@"MusicPlayerBackground.png"] delay:0.0];
+}
+
+-(void)removeMoviePlayerBackground
+{
+	[self changeImage:[self nextImage] delay:0.0];
+}
+
 -(void)viewDidLoad
 {
+	NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+	
+	[center addObserver:self selector:@selector(useMoviePlayerBackground) name:@"UseMoviePlayerBackground" object:nil];
+	[center addObserver:self selector:@selector(removeMoviePlayerBackground) name:@"RemoveMoviePlayerBackground" object:nil];
+	
 	views[0] = front;
 	views[1] = back;
 	
 	activeView = 0;
 	curIndex = 0;
 	
-	UIImage* image = [UIImage imageNamed:[self nextImageName]];
-	
-	[views[activeView] setImage:image];
+	[views[activeView] setImage:[self nextImage]];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
@@ -67,7 +78,7 @@
 	
 	if(newIndex != curIndex)
 	{
-		[self changeImage];
+		[self changeImage:[self nextImage] delay:0.5];
 		curIndex = newIndex;
 	}
 	
@@ -80,6 +91,7 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateBadgeValues" object:nil];
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     int count = tabBarController.viewControllers.count;
     NSMutableArray *savedTabsOrderArray = [NSMutableArray arrayWithCapacity:count];
@@ -96,19 +108,13 @@
 
 - (void)didReceiveMemoryWarning
 {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
 
 - (void)dealloc
 {
