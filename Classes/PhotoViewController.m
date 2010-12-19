@@ -71,6 +71,8 @@
 		[fileManager createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:nil];
 	}
 	
+	isDir = NO;
+	
 	NSString* photosDirectory = [NSString stringWithFormat:@"%@/photos", [self getDocumentDirectory]];
 	
 	if([fileManager fileExistsAtPath:photosDirectory isDirectory:&isDir] == NO && !isDir)

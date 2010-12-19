@@ -235,9 +235,26 @@
 	[[self navigationController] popViewControllerAnimated:YES];
 }
 
+-(void)checkForDirectories
+{
+	NSFileManager* fileManager = [NSFileManager defaultManager];
+	
+	BOOL isDir = NO;
+		
+	NSString* photosDirectory = [NSString stringWithFormat:@"%@/photos", [self getDocumentDirectory]];
+	
+	if([fileManager fileExistsAtPath:photosDirectory isDirectory:&isDir] == NO && !isDir)
+	{
+		[fileManager createDirectoryAtPath:photosDirectory withIntermediateDirectories:NO attributes:nil error:nil];
+	}
+}
+
+
 -(void)getPicture:(NSDictionary*)data
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	
+	[self checkForDirectories];
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	
