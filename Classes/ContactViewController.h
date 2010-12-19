@@ -18,6 +18,7 @@
 
 -(IBAction)sendEmail:(id)sender;
 -(IBAction)callNumber:(id)sender;
--(IBAction)mailingAddress:(id)sender;
+-(IBAction)twitter:(id)sender;
+-(IBAction)facebook:(id)sender;
 
 @end

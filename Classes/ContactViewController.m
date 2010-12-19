@@ -30,7 +30,6 @@
 {
 	NSString* messageBody = [NSString stringWithFormat:@"<Write your message here>"];
 	
-	// Send song request
 	if([MFMailComposeViewController canSendMail] == YES)
 	{	
 		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
@@ -80,14 +79,37 @@
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:1-888-501-9882"]];
 }
 
--(IBAction)mailingAddress:(id)sender
-{
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://maps.google.com/maps?q=9536+Mountain+Lake+Dr.++Ooltewah,+TN+37363"]];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(IBAction)twitter:(id)sender
+{
+	UIApplication* app = [UIApplication sharedApplication];
+	
+	if([app canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=jaimejorgemusic"]] == YES )
+	{
+		[app openURL:[NSURL URLWithString:@"twitter://user?screen_name=jaimejorgemusic"]];
+	}
+	else
+	{
+		[app openURL:[NSURL URLWithString:@"http://twitter.com/jaimejorgemusic"]];
+	}
+}
+
+-(IBAction)facebook:(id)sender
+{
+	UIApplication* app = [UIApplication sharedApplication];
+	
+//  if(![app openURL:[NSURL URLWithString:@"fb://profile/439925475153"]] )
+//  {
+//		[app openURL:[NSURL URLWithString:@"fb://profile/439925475153"]];
+//	}
+//	else
+//	{
+		[app openURL:[NSURL URLWithString:@"http://www.facebook.com/pages/Fans-of-Jaime-Jorge/439925475153"]];
+//	}
 }
 
 - (void)didReceiveMemoryWarning

@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1024</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -64,10 +64,10 @@
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 					</object>
-					<object class="IBUIButton" id="850371183">
+					<object class="IBUIButton" id="526402998">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 207}, {280, 84}}</string>
+						<string key="NSFrame">{{20, 199}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -79,9 +79,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<int key="IBUIButtonType">1</int>
-						<int key="IBUILineBreakMode">0</int>
-						<string type="base64-UTF8" key="IBUINormalTitle">TWFpbGluZyBBZGRyZXNzOgogICAgSkVKIEVudGVycHJpc2VzLCBJbmMuCiAgICA5NTM2IE1vdW50YWlu
-IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
+						<string key="IBUINormalTitle">Email: bookings@jaimejorge.com</string>
 						<reference key="IBUIHighlightedTitleColor" ref="303847827"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -92,10 +90,10 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
 					</object>
-					<object class="IBUIButton" id="1054527803">
+					<object class="IBUIButton" id="391624364">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 305}, {280, 37}}</string>
+						<string key="NSFrame">{{20, 252}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -106,10 +104,30 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Call: 1-888-501-9882</string>
 						<reference key="IBUIHighlightedTitleColor" ref="303847827"/>
-						<object class="NSColor" key="IBUIDisabledTitleColor">
+						<object class="NSColor" key="IBUIDisabledTitleColor" id="686797531">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 						</object>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="801299056"/>
+					</object>
+					<object class="IBUIButton" id="1054527803">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{20, 305}, {280, 37}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIFont" ref="502972338"/>
+						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">twitter: jaimejorgemusic</string>
+						<reference key="IBUIHighlightedTitleColor" ref="303847827"/>
+						<reference key="IBUIDisabledTitleColor" ref="686797531"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -127,7 +145,7 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="502972338"/>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Email: bookings@jaimejorge.com</string>
+						<string key="IBUINormalTitle">facebook: Fans of Jaime Jorge</string>
 						<reference key="IBUIHighlightedTitleColor" ref="303847827"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -165,37 +183,46 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">callNumber:</string>
-						<reference key="source" ref="1054527803"/>
+						<reference key="source" ref="391624364"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">9</int>
+					<int key="connectionID">17</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">sendEmail:</string>
-						<reference key="source" ref="1071516425"/>
+						<reference key="source" ref="526402998"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">10</int>
+					<int key="connectionID">18</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">callButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="1054527803"/>
+						<reference key="destination" ref="391624364"/>
 					</object>
-					<int key="connectionID">11</int>
+					<int key="connectionID">19</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">mailingAddress:</string>
-						<reference key="source" ref="850371183"/>
+						<string key="label">twitter:</string>
+						<reference key="source" ref="1054527803"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">14</int>
+					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">facebook:</string>
+						<reference key="source" ref="1071516425"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">23</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -213,9 +240,10 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="8237224"/>
-							<reference ref="1054527803"/>
 							<reference ref="1071516425"/>
-							<reference ref="850371183"/>
+							<reference ref="1054527803"/>
+							<reference ref="526402998"/>
+							<reference ref="391624364"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -236,18 +264,23 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="1054527803"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
 						<reference key="object" ref="1071516425"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">12</int>
-						<reference key="object" ref="850371183"/>
+						<int key="objectID">15</int>
+						<reference key="object" ref="526402998"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">16</int>
+						<reference key="object" ref="391624364"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">5</int>
+						<reference key="object" ref="1054527803"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
@@ -260,8 +293,10 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 					<string>-2.CustomClassName</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
-					<string>12.IBPluginDependency</string>
-					<string>12.IBViewBoundsToFrameTransform</string>
+					<string>15.IBPluginDependency</string>
+					<string>15.IBViewBoundsToFrameTransform</string>
+					<string>16.IBPluginDependency</string>
+					<string>16.IBViewBoundsToFrameTransform</string>
 					<string>4.IBPluginDependency</string>
 					<string>4.IBViewBoundsToFrameTransform</string>
 					<string>5.IBPluginDependency</string>
@@ -277,7 +312,11 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC+AAAw5eAAA</bytes>
+						<bytes key="NSTransformStruct">AUGgAABDRwAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AUGgAABDfAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -285,11 +324,11 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAw7YAAA</bytes>
+						<bytes key="NSTransformStruct">AUGgAABDmIAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAw8yAAA</bytes>
+						<bytes key="NSTransformStruct">AUGgAABDswAAA</bytes>
 					</object>
 				</object>
 			</object>
@@ -309,7 +348,7 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -322,11 +361,13 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>callNumber:</string>
-							<string>mailingAddress:</string>
+							<string>facebook:</string>
 							<string>sendEmail:</string>
+							<string>twitter:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -337,8 +378,9 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>callNumber:</string>
-							<string>mailingAddress:</string>
+							<string>facebook:</string>
 							<string>sendEmail:</string>
+							<string>twitter:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -347,11 +389,15 @@ IExha2UgRHIuCiAgICBPb2x0ZXdhaCwgVE4gMzczNjM</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">mailingAddress:</string>
+								<string key="name">facebook:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">sendEmail:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">twitter:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
