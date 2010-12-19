@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
-@interface MinistryViewController : UIViewController {
-
+@interface MinistryViewController : UIViewController
+{
+	UIImageView* imageView;
+	
+	int imageIndex;
 }
+
+@property (retain, nonatomic) IBOutlet UIImageView* imageView;
 
 @end

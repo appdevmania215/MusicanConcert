@@ -10,9 +10,28 @@
 
 @implementation MinistryViewController
 
+@synthesize imageView;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+	
+	imageIndex = [defaults integerForKey:@"MinistryPhoto"];
+	
+	++imageIndex;
+	
+	if(imageIndex > 3)
+	{
+		imageIndex = 1;
+	}
+	
+	UIImage* image = [UIImage imageNamed:[NSString stringWithFormat:@"Photo%d.png", imageIndex]];
+	
+	[imageView setImage:image];
+	
+	[defaults setInteger:imageIndex forKey:@"MinistryPhoto"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
