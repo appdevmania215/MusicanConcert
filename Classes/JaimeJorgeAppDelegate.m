@@ -61,14 +61,14 @@ void uncaughtExceptionHandler(NSException *exception)
 {
 	UINavigationController* moreVC = tabBarController.moreNavigationController;
 	UINavigationBar* moreNavBar = moreVC.navigationBar;
+	UITableView* moreTV = (UITableView*)[[[moreVC viewControllers] objectAtIndex:0] view];
 	
 	[moreNavBar setBarStyle:UIBarStyleBlackTranslucent];
 	[moreNavBar setTranslucent:YES];
 	
-	UITableView* moreTV = (UITableView*)moreVC.topViewController.view;
-	
 	moreTV.backgroundColor = [UIColor clearColor];
 	moreTV.separatorStyle = UITableViewCellSeparatorStyleNone;
+	[moreTV setNeedsDisplay];
 	
 	if( moreTV.dataSource != self )
 	{
@@ -130,6 +130,7 @@ void uncaughtExceptionHandler(NSException *exception)
 	[FlurryAPI startSessionWithLocationServices:@"ZC2TW18UYGB1CNC67F99"];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeValues) name:@"UpdateBadgeValues" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureMoreVC) name:@"ConfigureMoreVC" object:nil];
 	
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	
