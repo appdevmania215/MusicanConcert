@@ -35,6 +35,12 @@
 		9F27E667121C2BE4007FFC20 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F27E665121C2BE4007FFC20 /* Default@2x.png */; };
 		9F27E698121C339D007FFC20 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F27E696121C339D007FFC20 /* Logo.png */; };
 		9F27E699121C339D007FFC20 /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F27E697121C339D007FFC20 /* Logo@2x.png */; };
+		9F369DAF12ADE8A00070B559 /* Photo1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DA912ADE8A00070B559 /* Photo1.png */; };
+		9F369DB012ADE8A00070B559 /* Photo1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DAA12ADE8A00070B559 /* Photo1@2x.png */; };
+		9F369DB112ADE8A00070B559 /* Photo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DAB12ADE8A00070B559 /* Photo2.png */; };
+		9F369DB212ADE8A00070B559 /* Photo2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DAC12ADE8A00070B559 /* Photo2@2x.png */; };
+		9F369DB312ADE8A00070B559 /* Photo3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DAD12ADE8A00070B559 /* Photo3.png */; };
+		9F369DB412ADE8A00070B559 /* Photo3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F369DAE12ADE8A00070B559 /* Photo3@2x.png */; };
 		9F57FBA81221CB9100264AAD /* TrackPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5256A1218EE7800E52A74 /* TrackPreviewController.m */; };
 		9F6439371285A1DA00313BF2 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6439361285A1DA00313BF2 /* EventKit.framework */; };
 		9F64397E1285A7F900313BF2 /* libFlurryWithLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F64397D1285A7F900313BF2 /* libFlurryWithLocation.a */; };
@@ -70,6 +76,14 @@
 		9FC22E22127DDC1B00D72B0E /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC22E20127DDC1B00D72B0E /* ContactViewController.m */; };
 		9FC22E23127DDC1B00D72B0E /* ContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FC22E21127DDC1B00D72B0E /* ContactViewController.xib */; };
 		9FC22E66127DE15900D72B0E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC22E61127DE13F00D72B0E /* MessageUI.framework */; };
+		9FCF7A2A12A5D3C00003F5DB /* ContactIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2212A5D3C00003F5DB /* ContactIcon.png */; };
+		9FCF7A2B12A5D3C00003F5DB /* ContactIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2312A5D3C00003F5DB /* ContactIcon@2x.png */; };
+		9FCF7A2C12A5D3C00003F5DB /* PhotoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2412A5D3C00003F5DB /* PhotoIcon.png */; };
+		9FCF7A2D12A5D3C00003F5DB /* PhotoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2512A5D3C00003F5DB /* PhotoIcon@2x.png */; };
+		9FCF7A2E12A5D3C00003F5DB /* ScheduleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2612A5D3C00003F5DB /* ScheduleIcon.png */; };
+		9FCF7A2F12A5D3C00003F5DB /* ScheduleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2712A5D3C00003F5DB /* ScheduleIcon@2x.png */; };
+		9FCF7A3012A5D3C00003F5DB /* VideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2812A5D3C00003F5DB /* VideoIcon.png */; };
+		9FCF7A3112A5D3C00003F5DB /* VideoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FCF7A2912A5D3C00003F5DB /* VideoIcon@2x.png */; };
 		9FE51EAF1218699000E52A74 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE51EAE1218699000E52A74 /* Icon.png */; };
 		9FE51EC312186BFA00E52A74 /* background1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE51EC212186BFA00E52A74 /* background1.png */; };
 		9FE51ECD12186DAF00E52A74 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE51ECA12186DAF00E52A74 /* background2.png */; };
@@ -81,8 +95,6 @@
 		9FE51FBC12187C0300E52A74 /* ConcertsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE51FBA12187C0300E52A74 /* ConcertsViewController.m */; };
 		9FE51FBD12187C0300E52A74 /* ConcertsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE51FBB12187C0300E52A74 /* ConcertsViewController.xib */; };
 		9FE5205312188DEB00E52A74 /* HTMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5205212188DEB00E52A74 /* HTMLParserDelegate.m */; };
-		9FE5212012189D9500E52A74 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE5211E12189D9500E52A74 /* calendar.png */; };
-		9FE5212112189D9500E52A74 /* calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE5211F12189D9500E52A74 /* calendar@2x.png */; };
 		9FE5228B1218BD8700E52A74 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE522821218BD8700E52A74 /* NSObject+SBJSON.m */; };
 		9FE5228C1218BD8700E52A74 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE522841218BD8700E52A74 /* NSString+SBJSON.m */; };
 		9FE5228D1218BD8700E52A74 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE522861218BD8700E52A74 /* SBJsonBase.m */; };
@@ -99,8 +111,6 @@
 		9FE525A51218F82A00E52A74 /* TrackPreviewStop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525A11218F82A00E52A74 /* TrackPreviewStop@2x.png */; };
 		9FE525AD1218FA7000E52A74 /* MinistryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE525AB1218FA7000E52A74 /* MinistryViewController.m */; };
 		9FE525AE1218FA7000E52A74 /* MinistryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525AC1218FA7000E52A74 /* MinistryViewController.xib */; };
-		9FE525B81218FBEA00E52A74 /* Ministry.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525B61218FBEA00E52A74 /* Ministry.png */; };
-		9FE525B91218FBEA00E52A74 /* Ministry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525B71218FBEA00E52A74 /* Ministry@2x.png */; };
 		9FE525F51218FF2000E52A74 /* BioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE525F31218FF2000E52A74 /* BioViewController.m */; };
 		9FE525F61218FF2000E52A74 /* BioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE525F41218FF2000E52A74 /* BioViewController.xib */; };
 		9FE6367F128722470058A709 /* JJMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE6367E128722470058A709 /* JJMoviePlayerController.m */; };
@@ -138,6 +148,12 @@
 		9F27E665121C2BE4007FFC20 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9F27E696121C339D007FFC20 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		9F27E697121C339D007FFC20 /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo@2x.png"; sourceTree = "<group>"; };
+		9F369DA912ADE8A00070B559 /* Photo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Photo1.png; sourceTree = "<group>"; };
+		9F369DAA12ADE8A00070B559 /* Photo1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo1@2x.png"; sourceTree = "<group>"; };
+		9F369DAB12ADE8A00070B559 /* Photo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Photo2.png; sourceTree = "<group>"; };
+		9F369DAC12ADE8A00070B559 /* Photo2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo2@2x.png"; sourceTree = "<group>"; };
+		9F369DAD12ADE8A00070B559 /* Photo3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Photo3.png; sourceTree = "<group>"; };
+		9F369DAE12ADE8A00070B559 /* Photo3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo3@2x.png"; sourceTree = "<group>"; };
 		9F6439361285A1DA00313BF2 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		9F64397B1285A7F900313BF2 /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
 		9F64397C1285A7F900313BF2 /* FlurryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAPI.h; sourceTree = "<group>"; };
@@ -187,6 +203,14 @@
 		9FC22E20127DDC1B00D72B0E /* ContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactViewController.m; sourceTree = "<group>"; };
 		9FC22E21127DDC1B00D72B0E /* ContactViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ContactViewController.xib; path = Classes/ContactViewController.xib; sourceTree = "<group>"; };
 		9FC22E61127DE13F00D72B0E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		9FCF7A2212A5D3C00003F5DB /* ContactIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ContactIcon.png; sourceTree = "<group>"; };
+		9FCF7A2312A5D3C00003F5DB /* ContactIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ContactIcon@2x.png"; sourceTree = "<group>"; };
+		9FCF7A2412A5D3C00003F5DB /* PhotoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoIcon.png; sourceTree = "<group>"; };
+		9FCF7A2512A5D3C00003F5DB /* PhotoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoIcon@2x.png"; sourceTree = "<group>"; };
+		9FCF7A2612A5D3C00003F5DB /* ScheduleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScheduleIcon.png; sourceTree = "<group>"; };
+		9FCF7A2712A5D3C00003F5DB /* ScheduleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScheduleIcon@2x.png"; sourceTree = "<group>"; };
+		9FCF7A2812A5D3C00003F5DB /* VideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoIcon.png; sourceTree = "<group>"; };
+		9FCF7A2912A5D3C00003F5DB /* VideoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoIcon@2x.png"; sourceTree = "<group>"; };
 		9FE51EAE1218699000E52A74 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		9FE51EC212186BFA00E52A74 /* background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background1.png; sourceTree = "<group>"; };
 		9FE51ECA12186DAF00E52A74 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
@@ -202,8 +226,6 @@
 		9FE51FBB12187C0300E52A74 /* ConcertsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ConcertsViewController.xib; path = Classes/ConcertsViewController.xib; sourceTree = "<group>"; };
 		9FE5205112188DEB00E52A74 /* HTMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParserDelegate.h; sourceTree = "<group>"; };
 		9FE5205212188DEB00E52A74 /* HTMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParserDelegate.m; sourceTree = "<group>"; };
-		9FE5211E12189D9500E52A74 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
-		9FE5211F12189D9500E52A74 /* calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar@2x.png"; sourceTree = "<group>"; };
 		9FE522801218BD8700E52A74 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		9FE522811218BD8700E52A74 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		9FE522821218BD8700E52A74 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -230,8 +252,6 @@
 		9FE525AA1218FA7000E52A74 /* MinistryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinistryViewController.h; sourceTree = "<group>"; };
 		9FE525AB1218FA7000E52A74 /* MinistryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinistryViewController.m; sourceTree = "<group>"; };
 		9FE525AC1218FA7000E52A74 /* MinistryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MinistryViewController.xib; path = Classes/MinistryViewController.xib; sourceTree = "<group>"; };
-		9FE525B61218FBEA00E52A74 /* Ministry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ministry.png; sourceTree = "<group>"; };
-		9FE525B71218FBEA00E52A74 /* Ministry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ministry@2x.png"; sourceTree = "<group>"; };
 		9FE525F21218FF2000E52A74 /* BioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BioViewController.h; sourceTree = "<group>"; };
 		9FE525F31218FF2000E52A74 /* BioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BioViewController.m; sourceTree = "<group>"; };
 		9FE525F41218FF2000E52A74 /* BioViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = BioViewController.xib; path = Classes/BioViewController.xib; sourceTree = "<group>"; };
@@ -440,6 +460,20 @@
 		9FE51EAD1218698500E52A74 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9F369DA912ADE8A00070B559 /* Photo1.png */,
+				9F369DAA12ADE8A00070B559 /* Photo1@2x.png */,
+				9F369DAB12ADE8A00070B559 /* Photo2.png */,
+				9F369DAC12ADE8A00070B559 /* Photo2@2x.png */,
+				9F369DAD12ADE8A00070B559 /* Photo3.png */,
+				9F369DAE12ADE8A00070B559 /* Photo3@2x.png */,
+				9FCF7A2212A5D3C00003F5DB /* ContactIcon.png */,
+				9FCF7A2312A5D3C00003F5DB /* ContactIcon@2x.png */,
+				9FCF7A2412A5D3C00003F5DB /* PhotoIcon.png */,
+				9FCF7A2512A5D3C00003F5DB /* PhotoIcon@2x.png */,
+				9FCF7A2612A5D3C00003F5DB /* ScheduleIcon.png */,
+				9FCF7A2712A5D3C00003F5DB /* ScheduleIcon@2x.png */,
+				9FCF7A2812A5D3C00003F5DB /* VideoIcon.png */,
+				9FCF7A2912A5D3C00003F5DB /* VideoIcon@2x.png */,
 				9FE637571287354A0058A709 /* MusicPlayerBackground.png */,
 				9FE637581287354A0058A709 /* MusicPlayerBackground@2x.png */,
 				9FA073DC121EB6D700757504 /* MinistryIcon.png */,
@@ -452,16 +486,12 @@
 				9F27E697121C339D007FFC20 /* Logo@2x.png */,
 				9F27E664121C2BE4007FFC20 /* Default.png */,
 				9F27E665121C2BE4007FFC20 /* Default@2x.png */,
-				9FE525B61218FBEA00E52A74 /* Ministry.png */,
-				9FE525B71218FBEA00E52A74 /* Ministry@2x.png */,
 				9FE5259E1218F82A00E52A74 /* TrackPreviewPlay.png */,
 				9FE5259F1218F82A00E52A74 /* TrackPreviewPlay@2x.png */,
 				9FE525A01218F82A00E52A74 /* TrackPreviewStop.png */,
 				9FE525A11218F82A00E52A74 /* TrackPreviewStop@2x.png */,
 				9FE525441218EBB700E52A74 /* TrackPreviewBackground.png */,
 				9FE525461218EBD800E52A74 /* TrackPreviewBackground@2x.png */,
-				9FE5211E12189D9500E52A74 /* calendar.png */,
-				9FE5211F12189D9500E52A74 /* calendar@2x.png */,
 				9FE51EC212186BFA00E52A74 /* background1.png */,
 				9FE51ECA12186DAF00E52A74 /* background2.png */,
 				9FE51ECB12186DAF00E52A74 /* background3.png */,
@@ -548,8 +578,6 @@
 				9FE51ECF12186DAF00E52A74 /* background4.png in Resources */,
 				9FE51FB012187B6200E52A74 /* MusicViewController.xib in Resources */,
 				9FE51FBD12187C0300E52A74 /* ConcertsViewController.xib in Resources */,
-				9FE5212012189D9500E52A74 /* calendar.png in Resources */,
-				9FE5212112189D9500E52A74 /* calendar@2x.png in Resources */,
 				9FE523551218CAD400E52A74 /* AlbumViewController.xib in Resources */,
 				9FE525451218EBB700E52A74 /* TrackPreviewBackground.png in Resources */,
 				9FE525471218EBD800E52A74 /* TrackPreviewBackground@2x.png in Resources */,
@@ -559,8 +587,6 @@
 				9FE525A41218F82A00E52A74 /* TrackPreviewStop.png in Resources */,
 				9FE525A51218F82A00E52A74 /* TrackPreviewStop@2x.png in Resources */,
 				9FE525AE1218FA7000E52A74 /* MinistryViewController.xib in Resources */,
-				9FE525B81218FBEA00E52A74 /* Ministry.png in Resources */,
-				9FE525B91218FBEA00E52A74 /* Ministry@2x.png in Resources */,
 				9FE525F61218FF2000E52A74 /* BioViewController.xib in Resources */,
 				9FFDD0E1121AE138006CC81E /* Icon@2x.png in Resources */,
 				9F27E666121C2BE4007FFC20 /* Default.png in Resources */,
@@ -586,6 +612,20 @@
 				9FC22E23127DDC1B00D72B0E /* ContactViewController.xib in Resources */,
 				9FE637591287354A0058A709 /* MusicPlayerBackground.png in Resources */,
 				9FE6375A1287354A0058A709 /* MusicPlayerBackground@2x.png in Resources */,
+				9FCF7A2A12A5D3C00003F5DB /* ContactIcon.png in Resources */,
+				9FCF7A2B12A5D3C00003F5DB /* ContactIcon@2x.png in Resources */,
+				9FCF7A2C12A5D3C00003F5DB /* PhotoIcon.png in Resources */,
+				9FCF7A2D12A5D3C00003F5DB /* PhotoIcon@2x.png in Resources */,
+				9FCF7A2E12A5D3C00003F5DB /* ScheduleIcon.png in Resources */,
+				9FCF7A2F12A5D3C00003F5DB /* ScheduleIcon@2x.png in Resources */,
+				9FCF7A3012A5D3C00003F5DB /* VideoIcon.png in Resources */,
+				9FCF7A3112A5D3C00003F5DB /* VideoIcon@2x.png in Resources */,
+				9F369DAF12ADE8A00070B559 /* Photo1.png in Resources */,
+				9F369DB012ADE8A00070B559 /* Photo1@2x.png in Resources */,
+				9F369DB112ADE8A00070B559 /* Photo2.png in Resources */,
+				9F369DB212ADE8A00070B559 /* Photo2@2x.png in Resources */,
+				9F369DB312ADE8A00070B559 /* Photo3.png in Resources */,
+				9F369DB412ADE8A00070B559 /* Photo3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +732,52 @@
 			};
 			name = Release;
 		};
+		9F68781A12B05F180062573A /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hye Multimedia Ministries LLC";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B203ABCE-F70C-463A-A447-1C0E5FBEBAD5";
+				SDKROOT = iphoneos4.2;
+			};
+			name = Distribution;
+		};
+		9F68781B12B05F180062573A /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/Developer/JaimeJorge/Entitlements.plist";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = JaimeJorge_Prefix.pch;
+				INFOPLIST_FILE = "JaimeJorge-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryLibWithLocation\"",
+				);
+				PRODUCT_NAME = JaimeJorge;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		9F68781C12B05F180062573A /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = IPA;
+				ZERO_LINK = NO;
+			};
+			name = Distribution;
+		};
 		9FA07366121EAB8E00757504 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -724,7 +810,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A915D084-9ADE-41EB-AF0C-F9A2A48DB6A5";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.2;
 			};
 			name = Debug;
 		};
@@ -740,8 +826,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A8432C4-DAF5-489F-9FA6-BA1A39ED0F27";
-				SDKROOT = iphoneos4.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "923DDDD6-147C-4237-A6CA-7A74B6512704";
+				SDKROOT = iphoneos4.2;
 			};
 			name = Release;
 		};
@@ -753,6 +839,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				9F68781B12B05F180062573A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -762,6 +849,7 @@
 			buildConfigurations = (
 				9FA07366121EAB8E00757504 /* Debug */,
 				9FA07367121EAB8E00757504 /* Release */,
+				9F68781C12B05F180062573A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -771,6 +859,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				9F68781A12B05F180062573A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
