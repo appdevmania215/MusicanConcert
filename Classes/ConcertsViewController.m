@@ -182,7 +182,8 @@
 		NSDictionary* concertToShow = [concerts objectAtIndex:index];
 		
 		UILabel* titleLabel = [cell textLabel];
-		NSString* titleString = [NSString stringWithFormat:@"%@, %@", [concertToShow objectForKey:@"Venue"], [concertToShow objectForKey:@"City"]];
+		//NSString* titleString = [NSString stringWithFormat:@"%@, %@", [concertToShow objectForKey:@"Venue"], [concertToShow objectForKey:@"City"]];
+		NSString* titleString = [NSString stringWithFormat:@"%@", [concertToShow objectForKey:@"City"]];
 		
 		[titleLabel setAdjustsFontSizeToFitWidth:YES];
 		[titleLabel setText:titleString];
