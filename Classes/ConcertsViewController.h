@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 @class HTMLParserDelegate;
 @class EGORefreshTableHeaderView;
@@ -14,10 +15,12 @@
 enum {
 	CALENDAR = 0,
 	MAP,
-	CALL
+	CALL,
+	TELL_A_FRIEND,
+	BUTTONS_SIZE
 };
 
-@interface ConcertsViewController : UIViewController <UITableViewDelegate, NSXMLParserDelegate, UIActionSheetDelegate>
+@interface ConcertsViewController : UIViewController <UITableViewDelegate, NSXMLParserDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
 	NSXMLParser* parser;
 	NSXMLParser* htmlParser;
@@ -39,7 +42,7 @@ enum {
 	
 	int numButtons;
 	
-	int index2type[4];
+	int index2type[BUTTONS_SIZE];
 	
 	NSIndexPath* savedIndexPath;
 	

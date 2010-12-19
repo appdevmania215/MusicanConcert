@@ -120,9 +120,9 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	
 	self.htmlParserDelegate = [[HTMLParserDelegate alloc] init];
-	
+		
 	[parser setDelegate:self];
-	
+		
 	[parser parse];
 	
 	[pool release];
@@ -222,17 +222,15 @@
 	{
 		int row = [indexPath row];
 		
-		NSString* buttons[4] =
-		{
-			nil, nil, nil, nil
-		};
+		NSString* buttons[BUTTONS_SIZE];
 		
 		numButtons = 0;
 		
 		self.selConcert = [concerts objectAtIndex:row];
 		
-		for(int i = 0; i < 4; ++i)
+		for(int i = 0; i < BUTTONS_SIZE; ++i)
 		{
+			buttons[i] = nil;
 			index2type[i] = -1;
 		}
 		
@@ -264,13 +262,17 @@
 			++numButtons;
 		}
 		
+		buttons[numButtons] = [NSString stringWithFormat:@"Tell a friend"];
+		index2type[numButtons] = TELL_A_FRIEND;
+		++numButtons;
+		
 		if(numButtons > 0)
 		{
 			action = [[UIActionSheet alloc] initWithTitle:@"Would you like to..."
 												 delegate:self
 										cancelButtonTitle:@"Do nothing" 
 								   destructiveButtonTitle:nil
-										otherButtonTitles:buttons[0], buttons[1], buttons[2], buttons[3], nil];
+										otherButtonTitles:buttons[0], buttons[1], buttons[2], buttons[3],  nil];
 			
 			
 			[action showInView:[[self view] superview]];
@@ -286,6 +288,75 @@
 	{
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
+}
+
+-(void)sendEmail
+{
+	NSString* hiStr = [NSString stringWithFormat:@"Hi! Jaime Jorge will be in concert at %@.", [selConcert objectForKey:@"City"]];
+	NSString* venue = @"";
+	NSString* date = [NSString stringWithFormat:@"The date is %@ at %@.", [selConcert objectForKey:@"Date"], [selConcert objectForKey:@"Time"]];
+	NSString* address = @"";
+	NSString* phone = @"";
+	
+	if([selConcert objectForKey:@"Venue"] != nil )
+	{
+		venue = [NSString stringWithFormat:@"The concert will be in %@.", [selConcert objectForKey:@"Venue"]];
+	}
+	
+	if([selConcert objectForKey:@"Address"] != nil )
+	{
+		address = [NSString stringWithFormat:@"If you would like to attend the address is %@.", [selConcert objectForKey:@"Address"]];
+	}
+	
+	if([selConcert objectForKey:@"Venue phone"] != nil )
+	{
+		phone = [NSString stringWithFormat:@"For more information call %@.", [selConcert objectForKey:@"Venue phone"]];
+	}
+	
+	NSString* messageBody = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", hiStr, venue, date, address, phone];
+	
+	if([MFMailComposeViewController canSendMail] == YES)
+	{	
+		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+		picker.mailComposeDelegate = self;
+		
+		[picker setSubject:NSLocalizedString(@"Jaime Jorge in Concert!", @"Jaime Jorge in Concert!")];
+		[picker setToRecipients:[NSArray arrayWithObject:@""]];
+		[picker setMessageBody:messageBody isHTML:NO];
+		
+		picker.navigationBar.barStyle = UIBarStyleBlack;
+		
+		[self presentModalViewController:picker animated:YES];
+		[picker release];
+	}
+	else
+	{
+		NSString *recipients = [NSString stringWithFormat:@"mailto:friend@email.here.com?subject=%@&body=%@",NSLocalizedString(@"Jaime Jorge in Concert!", @"Jaime Jorge in Concert!"), messageBody];
+		
+		NSString *email = [NSString stringWithFormat:@"%@", recipients];
+		email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+	}
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+{    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            break;
+        case MFMailComposeResultSaved:
+            break;
+        case MFMailComposeResultSent:
+            break;
+        case MFMailComposeResultFailed:
+            break;
+        default:
+            break;
+    }
+	
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -349,6 +420,10 @@
 				[alertView show];
 			}
 			
+			break;
+			
+		case TELL_A_FRIEND:
+			[self sendEmail];
 			break;
 	}
 	
