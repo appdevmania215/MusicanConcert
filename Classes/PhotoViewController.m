@@ -111,15 +111,22 @@
 	
 	NSDictionary* data = [NSDictionary dictionaryWithContentsOfURL:url];
 	
-	self.thumbs = [data objectForKey:@"photos"];
-	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	[thumbs writeToFile:[self getCacheFilename] atomically:YES];
-	
-	[self createDirectories];
-	
-	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	if ( data != nil )
+	{
+		self.thumbs = [data objectForKey:@"photos"];
+		
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+		
+		[thumbs writeToFile:[self getCacheFilename] atomically:YES];
+		
+		[self createDirectories];
+		
+		[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		[self performSelectorOnMainThread:@selector(noInternet) withObject:nil waitUntilDone:NO];
+	}
 	
 	[pool release];
 }
@@ -221,6 +228,20 @@
 	{
 		[tabBarItem setBadgeValue:nil];
 	}
+}
+
+-(void)noInternet
+{	
+	[activity stopAnimating];
+	
+	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Internet required" message:@"Internet required to download the photos. Try again when the device has a connection." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	
+	[alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	
 }
 
 -(void)reloadData

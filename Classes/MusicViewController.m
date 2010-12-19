@@ -114,17 +114,24 @@
 	NSURL* artistURL = [NSURL URLWithString:@"http://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStoreServices.woa/wa/wsLookup?id=264493238&entity=album"];
 	NSString* albumsJSON = [NSString stringWithContentsOfURL:artistURL encoding:NSASCIIStringEncoding error:nil];
 	
-	[self parseAlbums:albumsJSON];
-	
-	[self eraseCache];
-	
-	[albumsJSON writeToFile:[self getCacheFilename] atomically:YES encoding:NSASCIIStringEncoding error:nil];
-	
-	[self getCoverImages];
-	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	if( albumsJSON != nil)
+	{
+		[self parseAlbums:albumsJSON];
+		
+		[self eraseCache];
+		
+		[albumsJSON writeToFile:[self getCacheFilename] atomically:YES encoding:NSASCIIStringEncoding error:nil];
+		
+		[self getCoverImages];
+		
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+		
+		[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		[self performSelectorOnMainThread:@selector(noInternet) withObject:nil waitUntilDone:NO];
+	}
 	
 	[pool release];
 }
@@ -230,13 +237,27 @@
 	[activity stopAnimating];
 }
 
+-(void)noInternet
+{	
+	[activity stopAnimating];
+	
+	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Internet required" message:@"Internet required to download the photos. Try again when the device has a connection." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	
+	[alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	[[self navigationController] popViewControllerAnimated:YES];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [albums count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{    
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -247,22 +268,43 @@
     
 	int index = [indexPath row];
 	
-	NSDictionary* albumToShow = [albums objectAtIndex:index];
-	
-	UILabel* titleLabel = [cell textLabel];
-	NSString* titleString = [albumToShow objectForKey:@"collectionName"];
-	
-	[titleLabel setAdjustsFontSizeToFitWidth:YES];
-	[titleLabel setText:titleString];
-	[titleLabel setTextColor:[UIColor whiteColor]];
-	
-	UIImageView* imageView = [cell imageView];
-	UIImage* albumCover = [self getCoverImageForIndex:index];
-	
-	[imageView setImage:albumCover];
-	
-	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
+	if( [albums count] > 0 )
+	{
+		NSDictionary* albumToShow = [albums objectAtIndex:index];
+		
+		UILabel* titleLabel = [cell textLabel];
+		NSString* titleString = [albumToShow objectForKey:@"collectionName"];
+		
+		[titleLabel setAdjustsFontSizeToFitWidth:YES];
+		[titleLabel setText:titleString];
+		[titleLabel setTextColor:[UIColor whiteColor]];
+		
+		UIImageView* imageView = [cell imageView];
+		UIImage* albumCover = [self getCoverImageForIndex:index];
+		
+		[imageView setImage:albumCover];
+		
+		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+	}
+	else
+	{
+		UILabel* titleLabel = [cell textLabel];
+		NSString* titleString;
+		
+		if([activity isAnimating] == YES)
+		{
+			titleString = @"Searching for albums...";
+		}
+		else 
+		{
+			titleString = @"Internet connection required";
+		}
+		
+		[titleLabel setAdjustsFontSizeToFitWidth:YES];
+		[titleLabel setText:titleString];
+		[titleLabel setTextColor:[UIColor whiteColor]];
+	}
+
     return cell;
 }
 

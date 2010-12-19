@@ -23,6 +23,7 @@
 @synthesize activity;
 @synthesize selConcert;
 @synthesize alertView;
+@synthesize defaultMessage;
 
 #define EVENT_START 0
 #define ONE_HOUR_BEFORE -3600
@@ -41,6 +42,8 @@
 		self.concertsTable.showsVerticalScrollIndicator = YES;
 		[refreshHeaderView release];
 	}
+	
+	self.defaultMessage = @"No upcoming concerts.";
 	
 	[activity startAnimating];
 	
@@ -125,6 +128,11 @@
 	[pool release];
 }
 
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
+{
+	[self performSelectorOnMainThread:@selector(noInternet) withObject:nil waitUntilDone:NO];
+}
+
 -(NSDate*)dateFromDate:(NSString*)indate time:(NSString*)intime
 {
 	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -197,7 +205,7 @@
 		}
 		else 
 		{
-			titleString = @"No upcoming concerts.";
+			titleString = defaultMessage;
 		}
 		
 		[titleLabel setAdjustsFontSizeToFitWidth:YES];
@@ -432,6 +440,15 @@
 	[concertsTable reloadData];
 	
 	[self dataSourceDidFinishLoadingNewData];
+	
+	[activity stopAnimating];
+}
+
+-(void)noInternet
+{	
+	self.defaultMessage = @"Internet connection required"; 
+	
+	[concertsTable reloadData];
 	
 	[activity stopAnimating];
 }

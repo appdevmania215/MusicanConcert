@@ -16,6 +16,7 @@
 @synthesize activity;
 @synthesize videosTable;
 @synthesize moviePlayer;
+@synthesize defaultMessage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -108,17 +109,24 @@
 	
 	NSDictionary* data = [NSDictionary dictionaryWithContentsOfURL:url];
 	
-	self.videos = [data objectForKey:@"videos"];
-	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	[videos writeToFile:[self getCacheFilename] atomically:YES];
-	
-	[self createDirectories];
-	
-	[self getVideoCovers];
-	
-	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	if ( data != nil )
+	{
+		self.videos = [data objectForKey:@"videos"];
+		
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+		
+		[videos writeToFile:[self getCacheFilename] atomically:YES];
+		
+		[self createDirectories];
+		
+		[self getVideoCovers];
+		
+		[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		[self performSelectorOnMainThread:@selector(noInternet) withObject:nil waitUntilDone:NO];
+	}
 	
 	[pool release];
 }
@@ -175,7 +183,7 @@
 	}
 	else
 	{
-		[[cell textLabel] setText:@"Downloading videos..."];
+		[[cell textLabel] setText:defaultMessage];
 		[[cell textLabel] setTextColor:[UIColor whiteColor]];
 		
 		[[cell detailTextLabel] setText:@""];
@@ -188,6 +196,7 @@
 -(void)moviePlaybackFinish
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMoviePlayerBackground" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"ConfigureMoreVC" object:nil];
 	UIDevice* curDevice = [UIDevice currentDevice];
 	if( [curDevice respondsToSelector:@selector(setOrientation:)] == YES )
 	{
@@ -307,6 +316,15 @@
 	[activity stopAnimating];
 }
 
+-(void)noInternet
+{
+	self.defaultMessage = @"Internet connection required";
+	
+	[videosTable reloadData];
+	
+	[activity stopAnimating];
+}
+
 -(void)getVideoCount:(NSString*)urlStr tabIndex:(int)index sign:(int)sign
 {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -346,6 +364,7 @@
 	}
 	else
 	{
+		self.defaultMessage = @"Downloading videos...";
 		[activity startAnimating];
 		[self performSelectorInBackground:@selector(getVideos:) withObject:@"http://www.jaimejorge.com/app/getvideos.php?mode=1"];
 	}

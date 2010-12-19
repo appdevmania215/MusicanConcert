@@ -73,15 +73,22 @@
 	NSURL* albumURL = [NSURL URLWithString:albumURLString];
 	NSString* tracksJSON = [NSString stringWithContentsOfURL:albumURL encoding:NSASCIIStringEncoding error:nil];
 	
-	[self parseTracks:tracksJSON];
-	
-	[tracksJSON writeToFile:[self getCacheFilename] atomically:YES encoding:NSASCIIStringEncoding error:nil];
-	
-	[self getCoverImage];
-	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	
-	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	if( tracksJSON != nil )
+	{
+		[self parseTracks:tracksJSON];
+		
+		[tracksJSON writeToFile:[self getCacheFilename] atomically:YES encoding:NSASCIIStringEncoding error:nil];
+		
+		[self getCoverImage];
+		
+		[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		[self performSelectorOnMainThread:@selector(noInternet) withObject:nil waitUntilDone:NO];
+	}
 	
 	[pool release];
 }
@@ -106,6 +113,18 @@
 	[tracksTable reloadData];
 	
 	[activity stopAnimating];
+}
+
+-(void)noInternet
+{	
+	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Internet required" message:@"Internet required to download the albums. Try again when the device has a connection." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	
+	[alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	[[self navigationController] popViewControllerAnimated:YES];
 }
 
 -(void)viewDidLoad

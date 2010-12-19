@@ -46,6 +46,8 @@ enum {
 	UIActivityIndicatorView* activity;
 	
 	EGORefreshTableHeaderView *refreshHeaderView;
+	
+	NSString* defaultMessage;
 }
 
 @property (retain, nonatomic) NSXMLParser* parser;
@@ -56,6 +58,7 @@ enum {
 @property (retain, nonatomic) NSMutableArray* concerts;
 @property (retain, nonatomic) NSDictionary* selConcert;
 @property (retain, nonatomic) NSIndexPath* savedIndexPath;
+@property (retain, nonatomic) NSString* defaultMessage;
 @property (retain, nonatomic) IBOutlet UITableView* concertsTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
 

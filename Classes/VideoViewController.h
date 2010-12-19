@@ -24,9 +24,12 @@
 	EGORefreshTableHeaderView* refreshHeaderView;
 	
 	MPMoviePlayerController* moviePlayer;
+	
+	NSString* defaultMessage;
 }
 
 @property (retain, nonatomic) NSArray* videos;
+@property (retain, nonatomic) NSString* defaultMessage;
 @property (retain, nonatomic) MPMoviePlayerController* moviePlayer;
 @property (retain, nonatomic) IBOutlet UITableView* videosTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;

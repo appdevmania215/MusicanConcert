@@ -223,6 +223,18 @@
 	[pool release];
 }
 
+-(void)noInternet
+{	
+	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Internet required" message:@"Internet required to download the photos. Try again when the device has a connection." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	
+	[alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	[[self navigationController] popViewControllerAnimated:YES];
+}
+
 -(void)getPicture:(NSDictionary*)data
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -231,11 +243,19 @@
 	
 	NSURL* imageURL = [NSURL URLWithString:[data objectForKey:@"photourl"]];
 	NSData* imageData = [NSData dataWithContentsOfURL:imageURL];
-	[imageData writeToFile:[self getPictureFilename:data] atomically:YES];
 	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	[self setImageForView:curPage page:curPageNum];
+	if( imageData != nil )
+	{
+		[imageData writeToFile:[self getPictureFilename:data] atomically:YES];
+		
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+		
+		[self setImageForView:curPage page:curPageNum];
+	}
+	else
+	{
+		[self noInternet];
+	}
 	
 	[activity stopAnimating];
 	
