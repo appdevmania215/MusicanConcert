@@ -82,10 +82,6 @@ cyB0b3VjaGVkIHRoZSBsaXZlcyBvZiBtaWxsaW9ucy4gSXQgY2FuIHRvdWNoIHlvdXJzIHRvby4</str
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Ministry.png</string>
-						</object>
 					</object>
 					<object class="IBUIImageView" id="451401324">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -494,17 +490,8 @@ cyB0b3VjaGVkIHRoZSBsaXZlcyBvZiBtaWxsaW9ucy4gSXQgY2FuIHRvdWNoIHlvdXJzIHRvby4</str
 		<string key="IBDocument.LastKnownRelativeProjectPath">../JaimeJorge.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<object class="NSArray" key="dict.sortedKeys">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>Logo.png</string>
-				<string>Ministry.png</string>
-			</object>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{110, 125}</string>
-				<string>{110, 242}</string>
-			</object>
+			<string key="NS.key.0">Logo.png</string>
+			<string key="NS.object.0">{110, 125}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">132</string>
 	</data>
