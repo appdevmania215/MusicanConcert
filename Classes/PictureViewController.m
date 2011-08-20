@@ -51,24 +51,27 @@
 	UIImageView* imageView = [[scrollView subviews] objectAtIndex:0];
 	UIImage* image = [imageView image];
 	
-	CGSize size = [image size];
-	
-	CGFloat ratio = size.width / size.height;
-	
-	CGRect frame = CGRectMake(0, 0, MAX_WIDTH, MAX_HEIGHT);
-	
-	if(ratio > 1.0) // Wide
+	if(image != nil)
 	{
-		frame.size.height = frame.size.width / ratio;
-		frame.origin.y = (MAX_HEIGHT - frame.size.height) / 2;
+		CGSize size = [image size];
+		
+		CGFloat ratio = size.width / size.height;
+		
+		CGRect frame = CGRectMake(0, 0, MAX_WIDTH, MAX_HEIGHT);
+		
+		if(ratio > 1.0) // Wide
+		{
+			frame.size.height = frame.size.width / ratio;
+			frame.origin.y = (MAX_HEIGHT - frame.size.height) / 2;
+		}
+		else // Tall
+		{
+			frame.size.width = frame.size.height * ratio;
+			frame.origin.x = (MAX_WIDTH - frame.size.width) / 2;
+		}
+		
+		[imageView setFrame:frame];
 	}
-	else // Tall
-	{
-		frame.size.width = frame.size.height * ratio;
-		frame.origin.x = (MAX_WIDTH - frame.size.width) / 2;
-	}
-	
-	[imageView setFrame:frame];
 }
 
 -(void)setImageViewAspectRatio:(UIView*)view
@@ -318,7 +321,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+{	
 	if(scrollView == mainScrollView)
 	{
 		int offset = (int)([scrollView contentOffset].x) % MAX_WIDTH;
@@ -328,6 +331,10 @@
 			
 			if(newPage != curPageNum)
 			{
+				[self resetScrollView:prevPage];
+				[self resetScrollView:curPage];
+				[self resetScrollView:nextPage];
+				
 				if(newPage > curPageNum)
 				{
 					[self moveToNextPage];
@@ -365,8 +372,11 @@
 	[mainScrollView setContentOffset:offset];
 	
 	[self setThumbnailImageForView:prevPage page:index - 1];
+	[self resetScrollView:prevPage];
 	[self setThumbnailImageForView:curPage page:index];
+	[self resetScrollView:curPage];
 	[self setThumbnailImageForView:nextPage page:index + 1];
+	[self resetScrollView:nextPage];
 	
 	[self moveToPage:index];
 	
