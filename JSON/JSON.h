@@ -35,38 +35,16 @@
  JSON. One standard object-based and a higher level api consisting of
  categories added to existing Objective-C classes.
 
- This framework does its best to be as strict as possible, both in what it accepts and what it generates. For example, it does not support trailing commas in arrays or objects. Nor does it support embedded comments, or anything else not in the JSON specification. This is considered a feature. 
-  
- @section Features
-
- @li Easy-to-use API.
- @li Strict parsing & generation.
- @li Stack of error available in case of failure so you can easily figure out what is wrong.
- @li Optional pretty-printing of JSON output.
- @li Optionally sorted dictionary keys in JSON output.
- @li Configurable recursion depth for parsing, for added security.
-
-
- @section Links
-
- @li <a href="http://code.google.com/p/json-framework">Google code project site</a>.
- @li Browse <a href="http://github.com/stig/json-framework">the source at github</a>.
- @li Online version of the <a href="http://stig.github.com/json-framework/api">API documentation</a>. 
+ Learn more on the http://code.google.com/p/json-framework project site.
+ 
+ This framework does its best to be as strict as possible, both in what it
+ accepts and what it generates. For example, it does not support trailing commas
+ in arrays or objects. Nor does it support embedded comments, or
+ anything else not in the JSON specification. This is considered a feature. 
  
 */
 
-#if (TARGET_OS_IPHONE)
-
-#import "SBJsonParser.h"
-#import "SBJsonWriter.h"
+#import "SBJSON.h"
 #import "NSObject+SBJSON.h"
 #import "NSString+SBJSON.h"
 
-#else
-
-#import <JSON/SBJsonParser.h>
-#import <JSON/SBJsonWriter.h>
-#import <JSON/NSObject+SBJSON.h>
-#import <JSON/NSString+SBJSON.h>
-
-#endif

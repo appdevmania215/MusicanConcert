@@ -10,7 +10,7 @@
 #import "PhotoViewController.h"
 #import "VideoViewController.h"
 #import "MusicViewController.h"
-#import "FlurryAPI.h"
+#import "Flurry.h"
 
 @implementation JaimeJorgeAppDelegate
 
@@ -20,7 +20,7 @@
 
 void uncaughtExceptionHandler(NSException *exception)
 {
-    [FlurryAPI logError:@"Uncaught" message:@"Crash!" exception:exception];
+    [Flurry logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
 
 -(void)restoreOrder
@@ -73,9 +73,9 @@ void uncaughtExceptionHandler(NSException *exception)
 	if( moreTV.dataSource != self )
 	{
 		self.moreListCtrl = (UIMoreListController*)moreTV.dataSource;
-		
 		moreTV.dataSource = self;
 	}
+    [moreTV reloadData];
 }
 
 -(void)resetBadgeValues
@@ -121,13 +121,29 @@ void uncaughtExceptionHandler(NSException *exception)
 	[pool release];
 }
 
+- (BOOL)isTall
+{
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGFloat height = bounds.size.height;
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    
+    return (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) && ((height * scale) >= 1136));
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
 	UIImage* defaultImage = [UIImage imageNamed:@"Default.png"];
+    if ([self isTall] == YES)
+    {
+        defaultImage = [UIImage imageNamed:@"Default-568h@2x.png"];
+    }
 	UIImageView* imageView = [[[UIImageView alloc] initWithImage:defaultImage] autorelease];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    [imageView setBounds:bounds];
+    [imageView setFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
 	
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-	[FlurryAPI startSessionWithLocationServices:@"ZC2TW18UYGB1CNC67F99"];
+	[Flurry startSession:@"ZC2TW18UYGB1CNC67F99"];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeValues) name:@"UpdateBadgeValues" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureMoreVC) name:@"ConfigureMoreVC" object:nil];
@@ -150,7 +166,7 @@ void uncaughtExceptionHandler(NSException *exception)
 						 [imageView removeFromSuperview];
 					 }];
 	
-	[FlurryAPI countPageViews:tabBarController];
+	[Flurry logPageView]; //:tabBarController
 	
     return YES;
 }
@@ -163,7 +179,7 @@ void uncaughtExceptionHandler(NSException *exception)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell* cell = [moreListCtrl tableView:tableView cellForRowAtIndexPath:indexPath];
-	
+	[cell setBackgroundColor:[UIColor clearColor]];
 	UILabel* textLabel = cell.textLabel;
 	
 	textLabel.textColor = [UIColor whiteColor];

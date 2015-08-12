@@ -163,7 +163,7 @@
 	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-	
+	[cell setBackgroundColor:[UIColor clearColor]];
 	int index = [indexPath row];
 	
 	if([videos count] > 0)

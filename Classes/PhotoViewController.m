@@ -278,7 +278,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+	//[self.thumbsTable registerClass:[ThumbnailViewCell class] forCellReuseIdentifier:@"Cell"];
 	if(refreshHeaderView == nil)
 	{
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.thumbsTable.bounds.size.height, 320.0f, self.thumbsTable.bounds.size.height)];
@@ -331,11 +331,11 @@
     ThumbnailViewCell* cell = (ThumbnailViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        [[NSBundle mainBundle] loadNibNamed:@"ThumbnailViewCell" owner:self options:nil];
-        cell = tmpCell;
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ThumbnailViewCell" owner:self options:nil];
+        cell = [nib objectAtIndex:1];
         tmpCell = nil;
     }
-	
+	[cell setBackgroundColor:[UIColor clearColor]];
 	int index = [indexPath row];
 	
 	for( int startIndex = index * 4; startIndex < (index * 4) + 4; ++startIndex)

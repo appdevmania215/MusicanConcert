@@ -18,7 +18,7 @@
 	ThumbnailView* thumb3;
 	ThumbnailView* thumb4;
 }
-
++ (NSString*) resueIdentifier;
 @property (retain, nonatomic) IBOutlet ThumbnailView* thumb1;
 @property (retain, nonatomic) IBOutlet ThumbnailView* thumb2;
 @property (retain, nonatomic) IBOutlet ThumbnailView* thumb3;

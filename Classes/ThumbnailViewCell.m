@@ -43,7 +43,9 @@
 	[super setSelected:selected animated:animated];
 }
 
-
+- (NSString*) reuseIdentifier{
+    return @"Cell";
+}
 - (void)dealloc
 {
     [super dealloc];

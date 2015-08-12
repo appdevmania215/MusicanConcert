@@ -6,6 +6,7 @@
 //  Copyright 2010 Hye Multimedia Ministries LLC. All rights reserved.
 //
 
+#import "social/social.h"
 #import "PictureViewController.h"
 
 #define MAX_WIDTH 320
@@ -20,6 +21,7 @@
 @synthesize curPage;
 @synthesize nextPage;
 @synthesize activity;
+@synthesize CurrentImage;// JF
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,31 +50,36 @@
 
 -(void)setScrollViewAspectRatio:(UIScrollView*)scrollView
 {
-	UIImageView* imageView = [[scrollView subviews] objectAtIndex:0];
-	UIImage* image = [imageView image];
-	
-	if(image != nil)
-	{
-		CGSize size = [image size];
-		
-		CGFloat ratio = size.width / size.height;
-		
-		CGRect frame = CGRectMake(0, 0, MAX_WIDTH, MAX_HEIGHT);
-		
-		if(ratio > 1.0) // Wide
-		{
-			frame.size.height = frame.size.width / ratio;
-			frame.origin.y = (MAX_HEIGHT - frame.size.height) / 2;
-		}
-		else // Tall
-		{
-			frame.size.width = frame.size.height * ratio;
-			frame.origin.x = (MAX_WIDTH - frame.size.width) / 2;
-		}
-		
-		[imageView setFrame:frame];
-	}
+    UIImageView* imageView = [[scrollView subviews] objectAtIndex:0];
+    UIImage* image = [imageView image];
+    
+    if(image != nil)
+    {
+        CGSize size = [image size];
+        
+        CGFloat ratio = size.width / size.height;
+        
+        CGRect frame = CGRectMake(0, 0, MAX_WIDTH, MAX_HEIGHT);
+        
+        if(ratio > 1.0) // Wide
+        {
+            frame.size.width = MAX_WIDTH;
+            frame.size.height = frame.size.width / ratio;
+            frame.origin.y = (MAX_HEIGHT - frame.size.height) / 2;
+        }
+        else // Tall
+        {
+            frame.size.height = MAX_HEIGHT;
+            frame.size.width = frame.size.height * ratio;
+            frame.origin.x = (MAX_WIDTH - frame.size.width) / 2;
+        }
+        
+        [imageView setFrame:frame];
+    }
 }
+
+
+
 
 -(void)setImageViewAspectRatio:(UIView*)view
 {
@@ -150,10 +157,9 @@
 	if(num >= 0 && num < [thumbs count])
 	{
 		UIImage* image = [UIImage imageWithContentsOfFile:[self getThumbFilename:[thumbs objectAtIndex:num]]];
+       	[imageView setImage:image];
+        [self setScrollViewAspectRatio:scrollView];
 		
-		[imageView setImage:image];
-		
-		[self setScrollViewAspectRatio:scrollView];
 	}
 	else
 	{
@@ -164,9 +170,12 @@
 -(void)setImageForView:(UIScrollView*)scrollView page:(int)num
 {
 	UIImageView* imageView = [[scrollView subviews] objectAtIndex:0];
+    
+    self.CurrentImage = [imageView image]; // JF
 	
 	if(num >= 0 && num < [thumbs count])
 	{
+        
 		[imageView setImage:[UIImage imageWithContentsOfFile:[self getPictureFilename:[thumbs objectAtIndex:num]]]];
 	}
 	else
@@ -324,11 +333,12 @@
 {	
 	if(scrollView == mainScrollView)
 	{
+        
+        
 		int offset = (int)([scrollView contentOffset].x) % MAX_WIDTH;
-		if(offset == 0)
-		{
-			int newPage = [scrollView contentOffset].x / MAX_WIDTH;
-			
+        int newPage = [scrollView contentOffset].x / MAX_WIDTH;
+        
+        if (offset == 0) {
 			if(newPage != curPageNum)
 			{
 				[self resetScrollView:prevPage];
@@ -354,9 +364,29 @@
 				[self setThumbnailImageForView:prevPage page:curPageNum - 1];
 				[self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum + 2]];
 				[self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum - 2]];
-			}
-		}
-	}
+                    
+            }
+            else
+            {
+                [self resetScrollView:prevPage];
+                [self resetScrollView:curPage];
+                [self resetScrollView:nextPage];
+                
+                curPageNum = newPage;
+                
+                [self setImageForCurrentPage];
+                
+                [self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum + 1]];
+                [self setThumbnailImageForView:nextPage page:curPageNum + 1];
+                [self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum - 1]];
+                [self setThumbnailImageForView:prevPage page:curPageNum - 1];
+                [self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum + 2]];
+                [self performSelectorInBackground:@selector(getThumbnailForPage:) withObject:[NSNumber numberWithInt:curPageNum - 2]];
+                
+            }
+
+        }
+    }
 }
 
 - (void)viewDidLoad
@@ -370,19 +400,52 @@
 	CGPoint offset = CGPointMake(MAX_WIDTH * index, 0);
 	
 	[mainScrollView setContentOffset:offset];
-	
-	[self setThumbnailImageForView:prevPage page:index - 1];
-	[self resetScrollView:prevPage];
-	[self setThumbnailImageForView:curPage page:index];
-	[self resetScrollView:curPage];
-	[self setThumbnailImageForView:nextPage page:index + 1];
-	[self resetScrollView:nextPage];
-	
-	[self moveToPage:index];
+ 
 	
 	curPageNum = index;
 	
-	[self setImageForCurrentPage];
+	
+    
+    [self setThumbnailImageForView:prevPage page:index - 1];
+    [self resetScrollView:prevPage];
+    [self setThumbnailImageForView:curPage page:index];
+    [self resetScrollView:curPage];
+    [self setThumbnailImageForView:nextPage page:index + 1];
+    [self resetScrollView:nextPage];
+    [self moveToPage:index];
+    
+    [self setImageForCurrentPage];
+    // add our custom add button as the nav bar's custom right view
+	UIBarButtonItem *addButton = [[[UIBarButtonItem alloc]
+								   initWithTitle:NSLocalizedString(@"Share", @"")
+								   style:UIBarButtonSystemItemAction
+								   target:self
+								   action:@selector(addAction:)] autorelease];
+	self.navigationItem.rightBarButtonItem = addButton;
+}
+
+- (void)addAction:(id)sender
+{
+	NSString *textToShare = @"Want to share this picture from Jaime Jorge's app!";
+    
+    NSArray *activityItems;
+    
+    if (self.CurrentImage == nil)
+    {
+        UIImage *imageToShare = [UIImage imageNamed:@"icon.png"];
+        activityItems = [NSArray arrayWithObjects:textToShare,imageToShare, nil];//@[textToShare, imageToShare];
+        
+    }
+    else
+    {
+        activityItems = [NSArray arrayWithObjects:textToShare,self.CurrentImage, nil];//@[textToShare, imageToShare];
+    }
+
+    UIActivityViewController *activityVC =
+    [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                      applicationActivities:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

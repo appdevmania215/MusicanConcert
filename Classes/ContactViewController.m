@@ -24,7 +24,27 @@
 	{
 		[callButton setBackgroundImage:nil forState:UIControlStateNormal];
 	}
-}
+    _emailbtn.layer.cornerRadius =5;
+    _emailbtn.layer.borderWidth =1;
+    _emailbtn.layer.borderColor =[UIColor grayColor].CGColor;
+       
+    _callbtn.layer.cornerRadius =5;
+    _callbtn.layer.borderWidth =1;
+    _callbtn.layer.borderColor =[UIColor grayColor].CGColor;
+
+    _twitterbtn.layer.cornerRadius =5;
+    _twitterbtn.layer.borderWidth =1;
+    _twitterbtn.layer.borderColor =[UIColor grayColor].CGColor;
+    
+    _facebookbtn.layer.cornerRadius =5;
+    _facebookbtn.layer.borderWidth =1;
+    _facebookbtn.layer.borderColor =[UIColor grayColor].CGColor;
+    
+    _insagrambtn.layer.cornerRadius =5;
+    _insagrambtn.layer.borderWidth =1;
+    _insagrambtn.layer.borderColor =[UIColor grayColor].CGColor;
+    
+   }
 
 -(IBAction)sendEmail:(id)sender
 {
@@ -102,14 +122,28 @@
 {
 	UIApplication* app = [UIApplication sharedApplication];
 	
-//  if(![app openURL:[NSURL URLWithString:@"fb://profile/439925475153"]] )
-//  {
-//		[app openURL:[NSURL URLWithString:@"fb://profile/439925475153"]];
-//	}
-//	else
-//	{
+  if([app canOpenURL:[NSURL URLWithString:@"fb://profile/439925475153"]]==YES )
+  {
+		[app openURL:[NSURL URLWithString:@"fb://profile/439925475153"]];
+	}
+	else
+	{
 		[app openURL:[NSURL URLWithString:@"http://www.facebook.com/pages/Fans-of-Jaime-Jorge/439925475153"]];
-//	}
+	}
+}
+
+-(IBAction)instagram:(id)sender
+{
+    UIApplication* app = [UIApplication sharedApplication];
+    
+    if([app canOpenURL:[NSURL URLWithString:@"instagram://user?id=367933671"]]==YES )
+      {
+    		[app openURL:[NSURL URLWithString:@"instagram://user?id=367933671"]];
+    	}
+    	else
+    	{
+    [app openURL:[NSURL URLWithString:@"http://instagram.com/jaimejorgemusic"]];
+    	}
 }
 
 - (void)didReceiveMemoryWarning

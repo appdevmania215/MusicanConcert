@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlbumViewController : UIViewController
+@interface AlbumViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
 	NSDictionary* album;
 	NSArray* tracks;

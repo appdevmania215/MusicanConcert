@@ -27,10 +27,10 @@
 	
 	if([modalViewCtrl isKindOfClass:NSClassFromString(@"UITabBarCustomizeView")] == YES)
 	{
-		UINavigationBar* navBar = [[modalViewCtrl subviews] objectAtIndex:0];
+		//UINavigationBar* navBar = (UINavigationBar*) [[modalViewCtrl subviews] objectAtIndex:0];
 		
-		[navBar setBarStyle:UIBarStyleBlackTranslucent];
-		[navBar setTranslucent:YES];
+		//[navBar setBarStyle:UIBarStyleBlackTranslucent];
+		//[navBar setTranslucent:YES];
 	}
 }
 

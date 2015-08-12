@@ -10,7 +10,7 @@
 #import "JSON.h"
 #import "TrackPreviewController.h"
 
-#define CHARS_PER_LINE 21
+#define CHARS_PER_LINE 25
 #define TRACK_PREVIEW_TAG 7
 #define INDEX_LABEL_TAG 77
 
@@ -189,7 +189,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {	
-	CGFloat defaultRowHeight = [tableView rowHeight];
+	CGFloat defaultRowHeight = 60;
 	CGFloat extraHeight = 0;
 	int row = [indexPath row];
 	
@@ -210,34 +210,42 @@
 		{
 			extraHeight = 12.0;
 		}
+        else{
+            extraHeight = 0;
+        }
 	}
 
     return defaultRowHeight + extraHeight;
 }
 
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    int index = [indexPath row];
     static NSString *CellIdentifier = @"Cell";
 	UILabel *titleLabel;
 	CGRect frame;
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		
 		titleLabel = [cell textLabel];
 		[titleLabel setLineBreakMode: UILineBreakModeWordWrap];
         [titleLabel setNumberOfLines:3];
     }
+    [cell setBackgroundColor:[UIColor clearColor]];
     
-    int index = [indexPath row];
 	
 	NSDictionary* trackToShow = [tracks objectAtIndex:index];
 	
-	if ([[trackToShow objectForKey:@"wrapperType"] isEqualToString:@"track"] == YES)
+	if (index!=0)
 	{
+        
+        UIImageView* imageView = [cell imageView];
+        [imageView setImage:nil];
+        
 		TrackPreviewController* trackPreviewController = [trackPreviews objectForKey:[NSNumber numberWithInt:index]];
 		
 		if(trackPreviewController == nil)
@@ -277,7 +285,13 @@
 			frame2.origin.y = 10;
 			frame3.origin.y = 10;
 		}
-
+        else if([titleString length] <= CHARS_PER_LINE)
+        {
+            frame.size.height = 43.0;
+            frame2.origin.y = 13;
+            frame3.origin.y = 13;
+        }
+      
 		[titleLabel setFrame:frame];
 		[[trackPreviewController view] setFrame:frame2];
 		
@@ -300,8 +314,8 @@
 		[[[cell contentView] viewWithTag:INDEX_LABEL_TAG] removeFromSuperview];
 		[[cell contentView] addSubview:indexLabel];
 		
-		UIImageView* imageView = [cell imageView];
-		[imageView setImage:nil];
+		//UIImageView* imageView = [cell imageView];
+		//[imageView setImage:nil];
 		
 		[cell setAccessoryView:nil];
 		if(index < 10)
@@ -314,7 +328,10 @@
 		}
 	}
 	else
-	{		
+	{
+        [[[cell contentView] viewWithTag:TRACK_PREVIEW_TAG] removeFromSuperview];
+
+        
 		UILabel* titleLabel = [cell textLabel];
 		NSString* titleString = [trackToShow objectForKey:@"collectionName"];
 		
@@ -329,7 +346,13 @@
 		UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 		
 		[button setTag:index];
-		[button setTitle:@"Buy" forState:UIControlStateNormal];
+		[button setTitle:@" Buy " forState:UIControlStateNormal];
+        
+        button.layer.cornerRadius =5;
+        button.layer.borderWidth =1;
+        button.layer.borderColor =[UIColor grayColor].CGColor;
+        [button setBackgroundColor:[UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]];
+
 		[button sizeToFit];
 		[button addTarget:self action:@selector(buyTrack:) forControlEvents:UIControlEventTouchUpInside ];
 		

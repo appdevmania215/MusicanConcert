@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+//#import "FBConnect.h"
+//#import "SA_OAuthTwitterController.h"
 
 @class HTMLParserDelegate;
 @class EGORefreshTableHeaderView;
@@ -17,6 +19,7 @@ enum {
 	MAP,
 	CALL,
 	TELL_A_FRIEND,
+    FACEBOOK,
 	BUTTONS_SIZE
 };
 
@@ -51,6 +54,7 @@ enum {
 	EGORefreshTableHeaderView *refreshHeaderView;
 	
 	NSString* defaultMessage;
+    
 }
 
 @property (retain, nonatomic) NSXMLParser* parser;
@@ -64,5 +68,6 @@ enum {
 @property (retain, nonatomic) NSString* defaultMessage;
 @property (retain, nonatomic) IBOutlet UITableView* concertsTable;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
+
 
 @end

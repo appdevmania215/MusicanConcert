@@ -27,6 +27,8 @@
 	
 	int index;
 	int curPageNum;
+    
+    UIImage* CurrentImage;   // JF
 }
 
 @property (retain, nonatomic) NSArray* thumbs;
@@ -36,5 +38,6 @@
 @property (retain, nonatomic) IBOutlet UIScrollView* nextPage;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView* activity;
 @property (assign) int index;
+@property (retain, nonatomic)  UIImage* CurrentImage; // JF
 
 @end

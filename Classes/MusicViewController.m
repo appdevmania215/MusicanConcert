@@ -10,7 +10,7 @@
 #import "AlbumViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "JSON.h"
-
+#import "ThumbnailViewCell.h"
 @implementation MusicViewController
 
 @synthesize albums;
@@ -171,6 +171,8 @@
 		[self performSelectorInBackground:@selector(getAlbums) withObject:nil];
 	}
 	
+    [self.albumsTable registerClass:[ThumbnailViewCell class] forCellReuseIdentifier:@"Cell"];
+    
     [activity startAnimating];
 }
 
@@ -265,7 +267,7 @@
 	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    [cell setBackgroundColor:[UIColor clearColor]];
 	int index = [indexPath row];
 	
 	if( [albums count] > 0 )

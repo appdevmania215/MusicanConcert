@@ -11,6 +11,8 @@
 #import "EGORefreshTableHeaderView.h"
 #import <EventKit/EventKit.h>
 
+//static NSString* kAppId = @"217126961670143"; //Jaime Jorge's FB ID
+
 @implementation ConcertsViewController
 
 @synthesize parser;
@@ -25,6 +27,8 @@
 @synthesize alertView;
 @synthesize defaultMessage;
 
+
+
 #define EVENT_START 0
 #define ONE_HOUR_BEFORE -3600
 #define ONE_DAY_BEFORE ONE_HOUR_BEFORE * 24
@@ -32,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 	
 	if( refreshHeaderView == nil )
 	{
@@ -174,7 +179,7 @@
 	{
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    [cell setBackgroundColor:[UIColor clearColor]];
 	if([concerts count] > 0)
 	{
 		int index = [indexPath row];
@@ -234,6 +239,10 @@
 			buttons[i] = nil;
 			index2type[i] = -1;
 		}
+        
+        buttons[numButtons] = @"Share this concert";
+        index2type[numButtons] = FACEBOOK;
+        ++numButtons;
 		
 		UIActionSheet* action;
 		
@@ -360,57 +369,74 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	NSString* phoneNumber = [NSString stringWithFormat:@"tel:%@", [selConcert objectForKey:@"Venue phone"]];
 	NSString* address;
-	NSDate* eventdate;
+	//NSDate* eventdate;
 	
-	EKAlarm* alarm;
-	EKEvent* event;
-	EKCalendar* calendar;
-	NSError* error;
-	
+		
 	EKEventStore* store = [[EKEventStore alloc] init];
 	
 	// Determine which button was pressed
 	switch (index2type[buttonIndex])
 	{
 		case CALENDAR:
-			eventdate = [self dateFromDate:[selConcert objectForKey:@"Date"] time:[selConcert objectForKey:@"Time"]];
-			
-			event = [EKEvent eventWithEventStore:store];
-			
-			calendar = [store defaultCalendarForNewEvents];
-			
-			event.title = @"Jaime Jorge in Concert";
-			event.location = [selConcert objectForKey:@"Address"];
-			if (phoneNumber != nil)
-			{
-				event.notes = [NSString stringWithFormat:@"Phone number: %@", [selConcert objectForKey:@"Venue phone"]];
-			}
-			
-			event.startDate = eventdate;
-			event.endDate = eventdate;
-			event.calendar = calendar;
-			
-			alarm = [EKAlarm alarmWithRelativeOffset:ONE_DAY_BEFORE]; // Start of event
-			[event addAlarm:alarm];
-			
-			alarm = [EKAlarm alarmWithRelativeOffset:ONE_HOUR_BEFORE]; // One hour before
-			[event addAlarm:alarm];
-			
-			[store saveEvent:event span:EKSpanThisEvent error:&error];
-			
+            
+            if([store respondsToSelector:@selector(requestAccessToEntityType:completion:)]) {
+                // need user permission for iOS 6 and later
+                [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                    if (granted) {
+                        EKAlarm* alarm;
+                        EKEvent* event;
+                        EKCalendar* calendar;
+                        NSError* error;
+                        NSDate* eventdate;
+                        
+                        eventdate = [self dateFromDate:[selConcert objectForKey:@"Date"] time:[selConcert objectForKey:@"Time"]];
+                        
+                        event = [EKEvent eventWithEventStore:store];
+                        
+                        calendar = [store defaultCalendarForNewEvents];
+                        
+                        event.title = @"Jaime Jorge in Concert";
+                        event.location = [selConcert objectForKey:@"Address"];
+                        if (phoneNumber != nil)
+                        {
+                            event.notes = [NSString stringWithFormat:@"Phone number: %@", [selConcert objectForKey:@"Venue phone"]];
+                        }
+                        
+                        event.startDate = eventdate;
+                        event.endDate = eventdate;
+                        event.calendar = calendar;
+                        
+                        alarm = [EKAlarm alarmWithRelativeOffset:ONE_DAY_BEFORE]; // Start of event
+                        [event addAlarm:alarm];
+                        
+                        alarm = [EKAlarm alarmWithRelativeOffset:ONE_HOUR_BEFORE]; // One hour before
+                        [event addAlarm:alarm];
+                        
+                        [store saveEvent:event span:EKSpanThisEvent error:&error];
+
+                        
+                        }
+                    else {
+                       }
+                }];
+            }
+            
+						
 			break;
 			
 		case MAP:
 			address = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", [[selConcert objectForKey:@"Address"] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+            //address = [NSString stringWithFormat:@"http://maps.google.com/maps?&amp;q=3440+SW+Urish+Rd,Topeka+KS+66614-4601,785-478-4726,US"];
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:address]];
 			break;
 			
 		case CALL:
-			if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:"]] == NO )
+			if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:"]] == YES )
 			{
 				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 			}
@@ -423,9 +449,47 @@
 			
 			break;
 			
-		case TELL_A_FRIEND:
-			[self sendEmail];
+		case TELL_A_FRIEND:     //SHOULD "DO NOTHING"
+			[self sendEmail];  // JF
+            
 			break;
+            
+        case FACEBOOK:
+            //[self shareOnFacebook]; // JF
+           
+            NSLog(@"Sharing...");
+            
+            NSString* hiStr = [NSString stringWithFormat:@"Hi! Jaime Jorge will be in concert at %@.", [selConcert objectForKey:@"City"]];
+            NSString* venue = @"";
+            NSString* date = [NSString stringWithFormat:@"Date is %@ at %@.", [selConcert objectForKey:@"Date"], [selConcert objectForKey:@"Time"]];
+            NSString* address = @"";
+            NSString* phone = @"";
+            
+            if([selConcert objectForKey:@"Venue"] != nil )
+            {
+                venue = [NSString stringWithFormat:@"The concert will be in %@.", [selConcert objectForKey:@"Venue"]];
+            }
+            
+            if([selConcert objectForKey:@"Address"] != nil )
+            {
+                address = [NSString stringWithFormat:@"The address is %@.", [selConcert objectForKey:@"Address"]];
+            }
+            
+            if([selConcert objectForKey:@"Venue phone"] != nil )
+            {
+                phone = [NSString stringWithFormat:@"For information call %@.", [selConcert objectForKey:@"Venue phone"]];
+            }
+            
+            NSString* messageBody = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", hiStr, venue, date, address, phone];
+            
+            NSArray *activityItems = [NSArray arrayWithObjects:messageBody, nil];
+            
+            UIActivityViewController *activityVC =
+            [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                              applicationActivities:nil];
+            [self presentViewController:activityVC animated:YES completion:nil];
+            
+            break;
 	}
 	
 	[store release];
@@ -478,12 +542,44 @@
 	{
 		if (concertDescription == YES)
 		{
-			self.htmlParser = [[NSXMLParser alloc] initWithData:CDATABlock];
-			
-			[htmlParser setDelegate:htmlParserDelegate];
-			[htmlParserDelegate setConcert:self.concert];
-			
-			[htmlParser parse];
+//			self.htmlParser = [[NSXMLParser alloc] initWithData:CDATABlock];
+//			[htmlParser setDelegate:htmlParserDelegate];
+//			[htmlParserDelegate setConcert:self.concert];
+//			[htmlParser parse];
+            
+            NSMutableString *parseText = [[NSMutableString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
+            NSString *temp1 = [parseText stringByReplacingOccurrencesOfString:@"<ul>" withString:@""];
+            temp1 = [temp1 stringByReplacingOccurrencesOfString:@"</ul>" withString:@""];
+            temp1 = [temp1 stringByReplacingOccurrencesOfString:@"</li>" withString:@""];
+            temp1 = [temp1 stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
+            temp1 = [temp1 stringByReplacingOccurrencesOfString:@"</strong>" withString:@""];
+            temp1 = [temp1 stringByReplacingOccurrencesOfString:@": " withString:@"!!"];
+            NSArray *value = [temp1 componentsSeparatedByString:@"<li>"];
+            
+            for (int i=0;i<value.count;i++){
+                NSArray *temp2;
+                if(i==2){
+                    temp2= [value[i] componentsSeparatedByString:@":\n"];
+                }else{
+                     temp2 = [value[i] componentsSeparatedByString:@"!!"];
+                }
+                if(temp2.count==2){
+                     NSString * key = [temp2[0] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                    key = [key stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                    NSString * value_ = [temp2[1] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                    value_ = [value_ stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                    if([key isEqualToString:@"Address"]){
+                        value_ = [value_ stringByReplacingOccurrencesOfString:@"</a></li>" withString:@""];
+                        NSArray * temp3 = [value_ componentsSeparatedByString:@"\">"];
+                        value_ = temp3[1];
+                        value_ = [value_ stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
+                    }
+                    [self.concert setObject:value_ forKey:key];
+                }
+                
+            }
+            int j=0;
+            
 		}
 	}
 }
@@ -492,9 +588,10 @@
 {
 	if([elementName isEqualToString:@"item"])
 	{
-		[self.concerts addObject:self.concert];
-		self.concert = nil;
-		newConcert = NO;
+        [self.concerts addObject:self.concert];
+        self.concert = nil;
+        newConcert = NO;
+
 	}
 	else if ([elementName isEqualToString:@"title"] == YES && newConcert == YES)
 	{
